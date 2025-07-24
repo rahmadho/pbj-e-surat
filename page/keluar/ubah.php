@@ -80,7 +80,7 @@ $asal_tujuan = $data['kepada'];
                 </div>
                 <div class="form-group">
                   <label>Tanggal Surat </label>
-                  <input type="date" class="form-control" name="tgl" value="<?php echo $data['tgl_surat'] ?>" />
+                  <input type="date" data-datepicker class="form-control" name="tgl" value="<?php echo $data['tgl_surat'] ?>" />
                 </div>
                 <div class="form-group">
                   <label>File Surat (Format pdf)</label>

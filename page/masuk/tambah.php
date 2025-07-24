@@ -148,11 +148,11 @@ if (strlen($tambah) == 1) {
               </div>
               <div class="form-group">
                 <label>Tanggal Surat</label>
-                <input type="date" class="form-control" name="tgl_surat" id="tgl_surat" />
+                <input type="date" data-datepicker class="form-control" name="tgl_surat" id="tgl_surat" />
               </div>
               <div class="form-group">
                 <label>Tanggal Terima</label>
-                <input type="date" class="form-control" name="tgl_terima" id="tgl_terima" />
+                <input type="date" data-datepicker class="form-control" name="tgl_terima" id="tgl_terima" />
               </div>
               <div class="form-group">
                 <label>File Surat (Format pdf)</label>
@@ -160,7 +160,7 @@ if (strlen($tambah) == 1) {
               </div>
               <div class="form-group">
                 <div style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="is_undangan" value="1" id="is_undangan" style="margin: 0;">
+                  <input type="checkbox" name="is_undangan" class="minimal" value="1" id="is_undangan" style="margin: 0;">
                   <label for="is_undangan" style="margin: 0;">
                     Ceklis jika surat Undangan
                   </label>
@@ -173,7 +173,7 @@ if (strlen($tambah) == 1) {
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Tanggal Agenda</label>
-                      <input type="date" class="form-control" name="tgl_agenda" id="tgl_agenda" />
+                      <input type="date" data-datepicker class="form-control" name="tgl_agenda" id="tgl_agenda" />
                     </div>
                   </div>
                   <div class="col-md-6">

@@ -16,7 +16,7 @@
                             class="fa fa-print"></i> Cetak PDF</a>
                     <input style="margin-bottom: 10px;; margin-left: 5px;" type=button value=Kembali
                         onclick=self.history.back() class="btn btn-info" />
-                    <table class="table table-striped table-bordered table-hover" id="example1">
+                    <table class="table table-striped table-bordered table-hover" data-datatable="true">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -122,11 +122,11 @@
                     <form role="form" method="POST" action="page/masuk/cetak.php" target="blank">
                         <div class="form-group">
                             <label>Dari Tanggal</label>
-                            <input class="form-control" type="date" name="tgl1" />
+                            <input class="form-control" type="date" data-datepicker name="tgl1" />
                         </div>
                         <div class="form-group">
                             <label> Sampai Tanggal</label>
-                            <input class="form-control" type="date" name="tgl2" />
+                            <input class="form-control" type="date" data-datepicker name="tgl2" />
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="cetak" class="btn btn-default" style="margin-top: 8px;"><i
@@ -149,11 +149,11 @@
                     <form role="form" method="POST" action="page/masuk/cetak_user.php" target="blank">
                         <div class="form-group">
                             <label>Dari Tanggal</label>
-                            <input class="form-control" type="date" name="tgl1" />
+                            <input class="form-control" type="date" data-datepicker name="tgl1" />
                         </div>
                         <div class="form-group">
                             <label> Sampai Tanggal</label>
-                            <input class="form-control" type="date" name="tgl2" />
+                            <input class="form-control" type="date" data-datepicker name="tgl2" />
                         </div>
                         <input class="form-control" type="hidden" name="tujuan" value="<?php echo $tujuan ?>" />
                         <div class="modal-footer">

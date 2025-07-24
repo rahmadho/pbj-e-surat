@@ -7,7 +7,7 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover" id="example1">
+                    <table class="table table-striped table-bordered table-hover" data-datatable="true">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -87,11 +87,11 @@
 
                                     <div class="form-group">
                                         <label>Dari Tanggal</label>
-                                        <input class="form-control" type="date" name="tgl1" />
+                                        <input class="form-control" type="date" data-datepicker name="tgl1" />
                                     </div>
                                     <div class="form-group">
                                         <label> Sampai Tanggal</label>
-                                        <input class="form-control" type="date" name="tgl2" />
+                                        <input class="form-control" type="date" data-datepicker name="tgl2" />
                                     </div>
 
                                     <div class="modal-footer">

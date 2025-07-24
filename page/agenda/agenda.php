@@ -20,7 +20,7 @@ $query_agenda = $koneksi->query("SELECT * FROM tb_agenda as ta $filter");
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover" id="example1">
+                    <table class="table table-striped table-bordered table-hover" data-datatable="true">
                         <thead>
                             <tr>
                                 <th>No</th>

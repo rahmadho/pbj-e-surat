@@ -13,7 +13,7 @@
             class="btn btn-default"><i class="fa fa-print"></i> Cetak PDF</a>
           <input type=button value=Kembali onclick=self.history.back() style="margin-bottom: 8px; margin-left: 5px;"
             class="btn btn-info" />
-          <table class="table table-striped table-bordered table-hover" id="example1">
+          <table class="table table-striped table-bordered table-hover" data-datatable="true">
             <thead>
               <tr>
                 <th>No</th>
@@ -89,11 +89,11 @@
 
             <div class="form-group">
               <label>Dari Tanggal</label>
-              <input class="form-control" type="date" name="tgl1" />
+              <input class="form-control" type="date" data-datepicker name="tgl1" />
             </div>
             <div class="form-group">
               <label> Sampai Tanggal</label>
-              <input class="form-control" type="date" name="tgl2" />
+              <input class="form-control" type="date" data-datepicker name="tgl2" />
             </div>
 
             <div class="modal-footer">
@@ -122,11 +122,11 @@
 
             <div class="form-group">
               <label>Dari Tanggal</label>
-              <input class="form-control" type="date" name="tgl1" />
+              <input class="form-control" type="date" data-datepicker name="tgl1" />
             </div>
             <div class="form-group">
               <label> Sampai Tanggal</label>
-              <input class="form-control" type="date" name="tgl2" />
+              <input class="form-control" type="date" data-datepicker name="tgl2" />
             </div>
             <input class="form-control" type="hidden" name="tujuan" value="<?php echo $tujuan ?>" />
 

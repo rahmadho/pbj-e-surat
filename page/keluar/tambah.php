@@ -104,7 +104,7 @@ if (strlen($tambah) == 1) {
                                 </div>
                                 <div class="form-group">
                                     <label>Tanggal Surat </label>
-                                    <input type="date" class="form-control" name="tgl" id="tgl" />
+                                    <input type="date" data-datepicker class="form-control" name="tgl" id="tgl" />
                                 </div>
                                 <div class="form-group">
                                     <label>File Surat (Format pdf)</label>

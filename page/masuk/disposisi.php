@@ -65,7 +65,7 @@ $tujuan = $data['tujuan'];
                     </div>
                     <div class="form-group">
                         <label>Batas Waktu</label>
-                        <input type="date" class="form-control" name="batas" value="<?php echo _post('batas', $data['batas']) ?>" />
+                        <input type="date" data-datepicker class="form-control" name="batas" value="<?php echo _post('batas', $data['batas']) ?>" />
                     </div>
                     <div>
                         <input type="submit" name="simpan" value="Simpan" class="btn btn-success">

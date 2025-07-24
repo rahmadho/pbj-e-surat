@@ -9,7 +9,7 @@
                         <div class="panel-body">
                             <div class="table-responsive">
                                  <a href="?page=m_dispos&aksi=tambah" class="btn btn-success" style="margin-bottom: 8px;"><i class="fa fa-plus"></i> Tambah </a>
-                                <table class="table table-striped table-bordered table-hover" id="example1">
+                                <table class="table table-striped table-bordered table-hover" data-datatable="true">
                                     <thead>
                                         <tr>
                                             <th>No</th>

@@ -104,11 +104,11 @@ $asal_tujuan = $data['asal_surat'];
                     </div>
                     <div class="form-group">
                         <label>Tanggal Surat</label>
-                        <input type="date" class="form-control" name="tgl_surat" value="<?php echo $tgl_surat ?>" />
+                        <input type="date" data-datepicker class="form-control" name="tgl_surat" value="<?php echo $tgl_surat ?>" />
                     </div>
                     <div class="form-group">
                         <label>Tanggal Terima</label>
-                        <input type="date" class="form-control" name="tgl_terima"
+                        <input type="date" data-datepicker class="form-control" name="tgl_terima"
                             value="<?php echo $tanggal_terima ?>" />
                     </div>
                     <div class="form-group">
@@ -130,7 +130,7 @@ $asal_tujuan = $data['asal_surat'];
                         <div class="col-md-6">
                             <div class="form-group">
                             <label>Tanggal Agenda</label>
-                            <input type="date" class="form-control" name="tgl_agenda" id="tgl_agenda" value="<?php echo $agenda?->tgl_agenda ?>" />
+                            <input type="date" data-datepicker class="form-control" name="tgl_agenda" id="tgl_agenda" value="<?php echo $agenda?->tgl_agenda ?>" />
                             </div>
                         </div>
                         <div class="col-md-6">

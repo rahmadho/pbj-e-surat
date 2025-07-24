@@ -18,29 +18,23 @@ if (is_auth()) {
     <title>SURAT ELEKTRONIK</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
+    
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <!-- Ionicons -->
     <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+
+    <!-- Plugins -->
+    <link rel="stylesheet" type="text/css" href="plugins/sw/dist/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    
     <!-- jQuery 3 -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="sw/dist/sweetalert.css">
-    <script type="text/javascript" src="sw/dist/sweetalert.min.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <script type="text/javascript" src="plugins/sw/dist/sweetalert.min.js"></script>
     <!-- Google Font -->
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -153,14 +147,11 @@ if (is_auth()) {
     <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
     <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <!-- SlimScroll -->
-    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
+    <script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script>
       $(document).ready(function () {
         $('.sidebar-menu').tree()
@@ -172,100 +163,30 @@ if (is_auth()) {
         if ($('.select2').length) {
           $('.select2').select2()
         }
-        if ($('#datemask').length) {
-          //Datemask dd/mm/yyyy
-          $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-        }
-        if ($('#datemask2').length) {
-          //Datemask2 mm/dd/yyyy
-          $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-        }
         if ($('[data-mask]').length) {
           //Money Euro
           $('[data-mask]').inputmask()
         }
-        if ($('#reservation').length) {
-          //Date range picker
-          $('#reservation').daterangepicker()
-        }
-        if ($('#reservationtime').length) {
-          //Date range picker with time picker
-          $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'MM/DD/YYYY hh:mm A' } })
-        }
-        if ($('#daterange-btn').length) {
-          //Date range as a button
-          $('#daterange-btn').daterangepicker(
-            {
-              ranges: {
-                'Today': [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-              },
-              startDate: moment().subtract(29, 'days'),
-              endDate: moment()
-            },
-            function (start, end) {
-              $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-            }
-          )
-        }
-        if ($('#datepicker').length) {
+        if ($('[data-datepicker]').length) {
           //Date picker
-          $('#datepicker').datepicker({
+          $('[data-datepicker]').datepicker({
             autoclose: true
-          })
-        }
-        //iCheck for checkbox and radio inputs
-        if ($('input[type="checkbox"].minimal, input[type="radio"].minimal').length) {
-          $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-            checkboxClass: 'icheckbox_minimal-blue',
-            radioClass: 'iradio_minimal-blue'
-          })
-        }
-        //Red color scheme for iCheck
-        if ($('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').length) {
-          $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-            checkboxClass: 'icheckbox_minimal-red',
-            radioClass: 'iradio_minimal-red'
-          })
-        }
-        //Flat red color scheme for iCheck
-        if ($('input[type="checkbox"].flat-red, input[type="radio"].flat-red').length) {
-          $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-            checkboxClass: 'icheckbox_flat-green',
-            radioClass: 'iradio_flat-green'
-          })
-        }
-        //Colorpicker
-        if ($('.my-colorpicker1').length) {
-          $('.my-colorpicker1').colorpicker()
-        }
-        //color picker with addon
-        if ($('.my-colorpicker2').length) {
-          $('.my-colorpicker2').colorpicker()
-        }
-        //Timepicker
-        if ($('.timepicker').length) {
-          $('.timepicker').timepicker({
-            showInputs: false
           })
         }
       })
     </script>
     <script>
       $(function () {
-        $('#example1').DataTable()
-        $('#example2').DataTable({
-          'paging': true,
-          'lengthChange': false,
-          'searching': false,
-          'ordering': true,
-          'info': true,
-          'autoWidth': false
-        })
+        $('[data-datatable]').DataTable(
+          // {
+          //   'paging': true,
+          //   'lengthChange': false,
+          //   'searching': false,
+          //   'ordering': true,
+          //   'info': true,
+          //   'autoWidth': false
+          // }
+        )
       })
     </script>
   </body>
