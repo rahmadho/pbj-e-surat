@@ -2,30 +2,22 @@
 error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 include "../../koneksi/koneksi.php";
 $content ='
-
 <style type="text/css">
   
   .tabel{border-collapse: collapse;}
   .tabel th{padding: 8px 5px;  background-color:  #cccccc;  }
   .tabel td{padding: 8px 5px; font-size: 12px;    }
 </style>
-
-
 ';
-
     if (isset($_POST['cetak'])) {
   
         $tgl1 = $_POST['tgl1'];
         $tgl2 = $_POST['tgl2'];
-
       }
-
     $content .= '
 <page>
-
     <div style="text-align:center; font-size: 18px;">Laporan Surat Masuk</div>
     
-
    <div style="text-align:center;">Dari Tanggal '.date('d-m-Y', strtotime($tgl1)).' Sampai Tanggal  '.date('d-m-Y', strtotime($tgl2)).'</div>
     <br>
     <table border="1px" class="tabel" align="center">
@@ -44,19 +36,14 @@ $content ='
           <th>Index</th>
           <th> Disposisi</th>
         </tr>';
-
         
           $tgl4 = date("d-m-Y");
           
-
           if (isset($_POST['cetak'])) {
   
         $tgl1 = $_POST['tgl1'];
         $tgl2 = $_POST['tgl2'];
-
         $no = 1;
-
-
         $sql = $koneksi->query("select * from tb_surat_masuk 
           left join tb_tujuan on tb_surat_masuk.tujuan=tb_tujuan.id_tujuan 
           left join ref_klasifikasi on tb_surat_masuk.Kode_surat=ref_klasifikasi.id 
@@ -64,11 +51,9 @@ $content ='
            left join tb_asal_tujuan on tb_surat_masuk.asal_surat=tb_asal_tujuan.id_asal_tujuan 
           where  tgl_surat between '$tgl1' and '$tgl2' ");
         while ($data=$sql->fetch_assoc()) {
-
             if ($data['sifat_surat']==p) {
                   $sifat = "Penting";
               }
-
             if ($data['sifat_surat']==sp) {
                   $sifat = "Sangat Penting";
               }
@@ -80,16 +65,12 @@ $content ='
             if ($data['sifat_surat']==s) {
                   $sifat = "Segera";
               }   
-
-
             if ($data['status']==0) {
                 $disposisi = "Belum";
               }
-
             if ($data['status']==1) {
               $disposisi = "Sudah";
             }    
-
           $content .='
           <tr>
               <td>'.$no++.' </td>
@@ -110,22 +91,16 @@ $content ='
             </tr>
             ';
             
-
         }
-
             
         
         }
         
         
-
-
 $content .='  
     </table>
-
     
 </page>';
-
     require_once('../../assets/html2pdf/html2pdf.class.php');
     $html2pdf = new HTML2PDF('L','LEGAL','fr');
     $html2pdf->WriteHTML($content);

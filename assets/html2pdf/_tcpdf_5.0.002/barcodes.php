@@ -38,7 +38,6 @@
 //               www.tecnick.com
 //               info@tecnick.com
 //============================================================+
-
 /**
  * PHP class to creates array representations for common 1D barcodes to be used with TCPDF.
  * @package com.tecnick.tcpdf
@@ -49,7 +48,6 @@
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
  * @version 1.0.008
  */
-
 	/**
 	* PHP class to creates array representations for common 1D barcodes to be used with TCPDF (http://www.tcpdf.org).<br>
 	* @name TCPDFBarcode
@@ -60,13 +58,11 @@
 	* @license http://www.gnu.org/copyleft/lesser.html LGPL
 	*/
 class TCPDFBarcode {
-
 	/**
 	 * @var array representation of barcode.
 	 * @access protected
 	 */
 	protected $barcode_array;
-
 	/**
 	 * This is the class constructor.
 	 * Return an array representations for common 1D barcodes:<ul>
@@ -84,7 +80,6 @@ class TCPDFBarcode {
 	public function __construct($code, $type) {
 		$this->setBarcode($code, $type);
 	}
-
 	/**
 	 * Return an array representations of barcode.
  	 * @return array
@@ -92,7 +87,6 @@ class TCPDFBarcode {
 	public function getBarcodeArray() {
 		return $this->barcode_array;
 	}
-
 	/**
 	 * Set the barcode.
 	 * @param string $code code to print
@@ -225,7 +219,6 @@ class TCPDFBarcode {
 		}
 		$this->barcode_array = $arrcode;
 	}
-
 	/**
 	 * CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
 	 * General-purpose code in very wide use world-wide
@@ -279,7 +272,6 @@ class TCPDFBarcode {
 		$chr['+'] = '121112121';
 		$chr['%'] = '111212121';
 		$chr['*'] = '121121211';
-
 		$code = strtoupper($code);
 		if ($extended) {
 			// extended mode
@@ -294,7 +286,6 @@ class TCPDFBarcode {
 		}
 		// add start and stop codes
 		$code = '*'.$code.'*';
-
 		$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
 		$k = 0;
 		$clen = strlen($code);
@@ -321,7 +312,6 @@ class TCPDFBarcode {
 		}
 		return $bararray;
 	}
-
 	/**
 	 * Encode a string to be used for CODE 39 Extended mode.
 	 * @param string $code code to represent.
@@ -372,7 +362,6 @@ class TCPDFBarcode {
 		}
 		return $code_ext;
 	}
-
 	/**
 	 * Calculate CODE 39 checksum (modulo 43).
 	 * @param string $code code to represent.
@@ -394,7 +383,6 @@ class TCPDFBarcode {
 		$j = ($sum % 43);
 		return $chars[$j];
 	}
-
 	/**
 	 * CODE 93 - USS-93
 	 * Compact code similar to Code 39
@@ -524,7 +512,6 @@ class TCPDFBarcode {
 		++$k;
 		return $bararray;
 	}
-
 	/**
 	 * Calculate CODE 93 checksum (modulo 47).
 	 * @param string $code code to represent.
@@ -569,7 +556,6 @@ class TCPDFBarcode {
 		$k = $chars[$check];
 		return $c.$k;
 	}
-
 	/**
 	 * Checksum for standard 2 of 5 barcodes.
 	 * @param string $code code to process.
@@ -592,7 +578,6 @@ class TCPDFBarcode {
 		}
 		return $r;
 	}
-
 	/**
 	 * MSI.
 	 * Variation of Plessey code, with similar applications
@@ -651,7 +636,6 @@ class TCPDFBarcode {
 		$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
 		return $this->binseq_to_array($seq, $bararray);
 	}
-
 	/**
 	 * Standard 2 of 5 barcodes.
 	 * Used in airline ticket marking, photofinishing
@@ -694,7 +678,6 @@ class TCPDFBarcode {
 		$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
 		return $this->binseq_to_array($seq, $bararray);
 	}
-
 	/**
 	 * Convert binary barcode sequence to TCPDF barcode array
 	 * @param string $seq barcode as binary sequence
@@ -722,7 +705,6 @@ class TCPDFBarcode {
 		}
 		return $bararray;
 	}
-
 	/**
 	 * Interleaved 2 of 5 barcodes.
 	 * Compact numeric code, widely used in industry, air cargo
@@ -755,7 +737,6 @@ class TCPDFBarcode {
 		}
 		// add start and stop codes
 		$code = 'AA'.strtolower($code).'ZA';
-
 		$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
 		$k = 0;
 		$clen = strlen($code);
@@ -787,7 +768,6 @@ class TCPDFBarcode {
 		}
 		return $bararray;
 	}
-
 	/**
 	 * C128 barcodes.
 	 * Very capable code, excellent density, high reliability; in very wide use world-wide
@@ -981,7 +961,6 @@ class TCPDFBarcode {
 		}
 		return $bararray;
 	}
-
 	/**
 	 * EAN13 and UPC-A barcodes.
 	 * EAN13: European Article Numbering international retail product code
@@ -1175,7 +1154,6 @@ class TCPDFBarcode {
 		}
 		return $bararray;
 	}
-
 	/**
 	 * UPC-Based Extentions
 	 * 2-Digit Ext.: Used to indicate magazines and newspaper issue numbers
@@ -1251,7 +1229,6 @@ class TCPDFBarcode {
 		$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
 		return $this->binseq_to_array($seq, $bararray);
 	}
-
 	/**
 	 * POSTNET and PLANET barcodes.
 	 * Used by U.S. Postal Service for automated mail sorting
@@ -1323,7 +1300,6 @@ class TCPDFBarcode {
 		$bararray['maxw'] += 1;
 		return $bararray;
 	}
-
 	/**
 	 * RMS4CC - CBC - KIX
 	 * RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code) - KIX (Klant index - Customer index)
@@ -1476,7 +1452,6 @@ class TCPDFBarcode {
 		}
 		return $bararray;
 	}
-
 	/**
 	 * CODABAR barcodes.
 	 * Older code often used in library systems, sometimes in blood banks
@@ -1532,7 +1507,6 @@ class TCPDFBarcode {
 		}
 		return $bararray;
 	}
-
 	/**
 	 * CODE11 barcodes.
 	 * Used primarily for labeling telecommunications equipment
@@ -1555,7 +1529,6 @@ class TCPDFBarcode {
 			'-' => '112111',
 			'S' => '112211'
 		);
-
 		$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
 		$k = 0;
 		$w = 0;
@@ -1624,7 +1597,6 @@ class TCPDFBarcode {
 		}
 		return $bararray;
 	}
-
 	/**
 	 * Pharmacode
 	 * Contains digits (0 to 9)
@@ -1650,7 +1622,6 @@ class TCPDFBarcode {
 		$bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
 		return $this->binseq_to_array($seq, $bararray);
 	}
-
 	/**
 	 * Pharmacode two-track
 	 * Contains digits (0 to 9)
@@ -1710,8 +1681,6 @@ class TCPDFBarcode {
 		--$bararray['maxw'];
 		return $bararray;
 	}
-
-
 	/**
 	 * IMB - Intelligent Mail Barcode - Onecode - USPS-B-3200
 	 * (requires PHP bcmath extension)
@@ -1838,7 +1807,6 @@ class TCPDFBarcode {
 		--$bararray['maxw'];
 		return $bararray;
 	}
-
 	/**
 	 * Convert large integer number to hexadecimal representation.
 	 * (requires PHP bcmath extension)
@@ -1862,7 +1830,6 @@ class TCPDFBarcode {
 		$hex = array_reverse($hex);
 		return implode($hex);
 	}
-
 	/**
 	 * Convert large hexadecimal number to decimal representation (string).
 	 * (requires PHP bcmath extension)
@@ -1879,7 +1846,6 @@ class TCPDFBarcode {
 		}
 		return $dec;
 	}
-
 	/**
 	 * Intelligent Mail Barcode calculation of Frame Check Sequence
 	 * @param string $code_arr array of hexadecimal values (13 bytes holding 102 bits right justified).
@@ -1915,7 +1881,6 @@ class TCPDFBarcode {
 		}
 		return $fcs;
 	}
-
 	/**
 	 * Reverse unsigned short value
 	 * @param int $num value to reversr
@@ -1931,7 +1896,6 @@ class TCPDFBarcode {
 		}
 		return $rev;
 	}
-
 	/**
 	 * generate Nof13 tables used for Intelligent Mail Barcode
 	 * @param int $n is the type of table: 2 for 2of13 table, 5 for 5of13table
@@ -1969,9 +1933,7 @@ class TCPDFBarcode {
 		}
 		return $table;
 	}
-
 } // end of class
-
 //============================================================+
 // END OF FILE
 //============================================================+

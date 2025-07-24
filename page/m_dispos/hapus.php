@@ -1,9 +1,6 @@
 <?php
-
 	$id = $_GET['id'];
-
 	$sql = $koneksi->query("delete from m_dispos where id_dispos='$id'");
-
 	?>
 		<script>
 		    setTimeout(function() {
@@ -16,8 +13,5 @@
 		        });
 		    }, 300);
 		</script>
-
-
 	<?php
-
  ?>

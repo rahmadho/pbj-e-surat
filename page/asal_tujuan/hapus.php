@@ -1,9 +1,6 @@
 <?php
-
 	$id = $_GET['id'];
-
 	$sql = $koneksi->query("delete from tb_asal_tujuan where id_asal_tujuan='$id'");
-
 	?>
 		<script>
 		    setTimeout(function() {
@@ -16,8 +13,5 @@
 		        });
 		    }, 300);
 		</script>
-
-
 	<?php
-
  ?>

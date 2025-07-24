@@ -1,9 +1,6 @@
 <?php
-
 	$id = $_GET['id'];
-
 	$sql = $koneksi->query("delete from ref_klasifikasi where id='$id'");
-
 	?>
 		<script>
 		    setTimeout(function() {
@@ -16,8 +13,5 @@
 		        });
 		    }, 300);
 		</script>
-
-
 	<?php
-
  ?>

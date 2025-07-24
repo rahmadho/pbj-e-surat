@@ -4,11 +4,8 @@
  * Description:
  *      This is a demo file used only for the main dashboard (index.html)
  **/
-
 $(function () {
-
   'use strict';
-
   // Make the dashboard widgets sortable Using jquery UI
   $('.connectedSortable').sortable({
     placeholder         : 'sort-highlight',
@@ -18,7 +15,6 @@ $(function () {
     zIndex              : 999999
   });
   $('.connectedSortable .box-header, .connectedSortable .nav-tabs-custom').css('cursor', 'move');
-
   // jQuery UI sortable for the todo list
   $('.todo-list').sortable({
     placeholder         : 'sort-highlight',
@@ -26,10 +22,8 @@ $(function () {
     forcePlaceholderSize: true,
     zIndex              : 999999
   });
-
   // bootstrap WYSIHTML5 - text editor
   $('.textarea').wysihtml5();
-
   $('.daterange').daterangepicker({
     ranges   : {
       'Today'       : [moment(), moment()],
@@ -44,10 +38,8 @@ $(function () {
   }, function (start, end) {
     window.alert('You chose: ' + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
   });
-
   /* jQueryKnob */
   $('.knob').knob();
-
   // jvectormap data
   var visitorsData = {
     US: 398, // USA
@@ -89,7 +81,6 @@ $(function () {
         el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
     }
   });
-
   // Sparkline charts
   var myvalues = [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021];
   $('#sparkline-1').sparkline(myvalues, {
@@ -115,15 +106,12 @@ $(function () {
     height   : '50',
     width    : '80'
   });
-
   // The Calender
   $('#calendar').datepicker();
-
   // SLIMSCROLL FOR CHAT WIDGET
   $('#chat-box').slimScroll({
     height: '250px'
   });
-
   /* Morris.js Charts */
   // Sales chart
   var area = new Morris.Area({
@@ -176,7 +164,6 @@ $(function () {
     gridTextFamily   : 'Open Sans',
     gridTextSize     : 10
   });
-
   // Donut Chart
   var donut = new Morris.Donut({
     element  : 'sales-chart',
@@ -189,14 +176,12 @@ $(function () {
     ],
     hideHover: 'auto'
   });
-
   // Fix for charts under tabs
   $('.box ul.nav a').on('shown.bs.tab', function () {
     area.redraw();
     donut.redraw();
     line.redraw();
   });
-
   /* The todo list plugin */
   $('.todo-list').todoList({
     onCheck  : function () {
@@ -206,5 +191,4 @@ $(function () {
       window.console.log($(this), 'The element has been unchecked');
     }
   });
-
 });

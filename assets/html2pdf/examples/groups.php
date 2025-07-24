@@ -12,7 +12,6 @@
  * isset($_GET['vuehtml']) is not mandatory
  * it allow to display the result in the HTML format
  */
-
 ob_start();
 ?>
 <style type="text/css">
@@ -59,9 +58,7 @@ for ($k=2; $k<5; $k++):
 </page>
 <?php
 endfor;
-
 $content = ob_get_clean();
-
 require_once(dirname(__FILE__).'/../html2pdf.class.php');
 try
 {

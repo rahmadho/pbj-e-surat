@@ -37,7 +37,6 @@
 //               www.tecnick.com
 //               info@tecnick.com
 //============================================================+
-
 /**
  * Utility to generate font definition files fot TCPDF.
  * @author Nicola Asuni, Olivier Plathey, Steven Wittens
@@ -46,7 +45,6 @@
  * @link http://www.tcpdf.org
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
 */
-
 /**
  * 
  * @param string $fontfile path to font file (TTF, OTF or PFB).
@@ -203,7 +201,6 @@ function MakeFont($fontfile, $fmfile, $embedded=true, $enc='cp1252', $patch=arra
 	SaveToFile($basename.'.php',$s);
 	print "Font definition file generated (".$basename.".php)\n";
 }
-
 /**
  * Read the specified encoding map.
  * @param string $enc map name (see /enc/ folder for valid names).
@@ -231,7 +228,6 @@ function ReadMap($enc) {
 	}
 	return $cc2gn;
 }
-
 /**
  * Read UFM file
  */
@@ -306,7 +302,6 @@ function ReadUFM($file, &$cidtogidmap) {
 	$fm['Widths'] = $widths;
 	return $fm;
 }
-
 /**
  * Read AFM file
  */
@@ -435,7 +430,6 @@ function ReadAFM($file,&$map) {
 	$fm['Widths'] = $widths;
 	return $fm;
 }
-
 function MakeFontDescriptor($fm, $symbolic=false) {
 	//Ascent
 	$asc = (isset($fm['Ascender']) ? $fm['Ascender'] : 1000);
@@ -492,7 +486,6 @@ function MakeFontDescriptor($fm, $symbolic=false) {
 	$fd .= ')';
 	return $fd;
 }
-
 function MakeWidthArray($fm) {
 	//Make character width array
 	$s = 'array(';
@@ -508,7 +501,6 @@ function MakeWidthArray($fm) {
 	$s .= ')';
 	return $s;
 }
-
 function MakeFontEncoding($map) {
 	//Build differences from reference encoding
 	$ref = ReadMap('cp1252');
@@ -525,7 +517,6 @@ function MakeFontEncoding($map) {
 	}
 	return rtrim($s);
 }
-
 function SaveToFile($file, $s, $mode='t') {
 	$f = fopen($file, 'w'.$mode);
 	if(!$f) {
@@ -534,17 +525,14 @@ function SaveToFile($file, $s, $mode='t') {
 	fwrite($f, $s, strlen($s));
 	fclose($f);
 }
-
 function ReadShort($f) {
 	$a = unpack('n1n', fread($f, 2));
 	return $a['n'];
 }
-
 function ReadLong($f) {
 	$a = unpack('N1N', fread($f, 4));
 	return $a['N'];
 }
-
 function CheckTTF($file) {
 	//Check if font license allows embedding
 	$f = fopen($file, 'rb');
@@ -582,7 +570,6 @@ function CheckTTF($file) {
 		print "Warning: font license does not allow embedding\n";
 	}
 }
-
 $arg = $GLOBALS['argv'];
 if (count($arg) >= 3) {
 	ob_start();

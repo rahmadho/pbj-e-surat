@@ -7,7 +7,6 @@
   .no-print {
     display: none !important;
   }
-
   //Elements that we want to hide when printing
   .main-sidebar,
   .left-side,
@@ -15,7 +14,6 @@
   .content-header {
     &:extend(.no-print);
   }
-
   //This is the only element that should appear, so let's remove the margins
   .content-wrapper,
   .right-side,
@@ -24,12 +22,10 @@
     min-height: 0 !important;
     .translate(0, 0) !important;
   }
-
   .fixed .content-wrapper,
   .fixed .right-side {
     padding-top: 0 !important;
   }
-
   //Invoice printing
   .invoice {
     width: 100%;
@@ -37,12 +33,10 @@
     margin: 0;
     padding: 0;
   }
-
   .invoice-col {
     float: left;
     width: 33.3333333%;
   }
-
   //Make sure table content displays properly
   .table-responsive {
     overflow: auto;

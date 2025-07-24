@@ -4,7 +4,6 @@
 /* commentaire dans un css */
 table, td { border: solid 1px #000000; color: #0000AA; }
 td.col1   { color: #00AA00; }
-
 /* autre commentaire */
 table.liste         { border: solid 2px #FF0000; }
 table.liste td      { background: #DDDDDD; }

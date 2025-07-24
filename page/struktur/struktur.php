@@ -8,10 +8,8 @@
       </h1>
       
     </section>
-
     <!-- Main content -->
     <section class="content">
-
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
@@ -19,5 +17,4 @@
           
           <img src="images/profile.jpg" width="1000" height="500" alt="">
 </h3>
-
         

@@ -1,5 +1,3 @@
 <?php
-
-  $koneksi = new mysqli ("localhost","root","","e_surat-2");
-
- ?>
+  $koneksi = new mysqli ("localhost","root","","pbj_e_surat");
+?>

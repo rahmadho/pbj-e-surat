@@ -12,7 +12,6 @@
  * isset($_GET['vuehtml']) is not mandatory
  * it allow to display the result in the HTML format
  */
-
     // get the HTML
      ob_start();
      $msg = "Le site de html2pdf\r\nhttp://html2pdf.fr/";
@@ -51,7 +50,6 @@
 </page>
 <?php
      $content = ob_get_clean();
-
     // convert to PDF
     require_once(dirname(__FILE__).'/../html2pdf.class.php');
     try

@@ -21,7 +21,6 @@ div.zone_over
     height: 35mm;
     overflow: hidden;
 }
-
 -->
 </style>
 <page style="font-size: 10pt">

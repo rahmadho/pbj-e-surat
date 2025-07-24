@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 rm -f *.pdf
-
 cd ../examples
 for PHP_SCRIPT in $(ls ./*.php);
 do
@@ -8,6 +7,5 @@ do
     echo "Example $PHP_SCRIPT => $PDF_FILE"
     php $PHP_SCRIPT > $PDF_FILE
 done
-
 cd ../test
 ls -l

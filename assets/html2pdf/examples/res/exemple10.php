@@ -73,7 +73,6 @@ div.minifiche div.download { position: absolute; border: none; left: 257px; top:
 <page orientation="paysage" >
 <style type="text/css">
 <!--
-
 div.main
 {
     padding:     0;
@@ -91,13 +90,11 @@ div.main
     font-weight: bold;
     text-align:  center;
 }
-
 div.main a
 {
     text-decoration: none;
     color: #EEEEEE;
 }
-
 div.main a:hover
 {
     text-decoration: underline;

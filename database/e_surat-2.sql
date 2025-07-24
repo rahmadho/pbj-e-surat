@@ -6,58 +6,44 @@
 -- Generation Time: May 18, 2021 at 06:35 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `e_surat`
 --
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `m_dispos`
 --
-
 CREATE TABLE `m_dispos` (
   `id_dispos` int(11) NOT NULL,
   `nama_bagian` varchar(255) COLLATE latin1_general_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
 --
 -- Dumping data for table `m_dispos`
 --
-
 INSERT INTO `m_dispos` (`id_dispos`, `nama_bagian`) VALUES
 (1, 'Bagian Keuangan'),
 (2, 'Bagian Perencanaan');
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `ref_klasifikasi`
 --
-
 CREATE TABLE `ref_klasifikasi` (
   `id` int(4) NOT NULL,
   `kode` varchar(50) NOT NULL,
   `nama` varchar(250) NOT NULL,
   `uraian` mediumtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 --
 -- Dumping data for table `ref_klasifikasi`
 --
-
 INSERT INTO `ref_klasifikasi` (`id`, `kode`, `nama`, `uraian`) VALUES
 (1, 'HK', 'HUKUM', 'HUKUM'),
 (2, 'HK.00', 'PERATURAN PERUNDANG-UNDANGAN', 'Surat-surat yang berkenaan dengan proses penyusunan peraturan perundang-undangan produk Mahkamah Agung, dari konsep / draf smpai selesai, maupun produk peraturan perundang-undangan yang diterima baik intern Mahkamah Agung maupun dari instansi lainnya.'),
@@ -161,32 +147,24 @@ INSERT INTO `ref_klasifikasi` (`id`, `kode`, `nama`, `uraian`) VALUES
 (263, 'PS.00', 'ADMINISTRASI UMUM', 'Surat-surat yang berkenaan dengan pengawasan administrasi umum, meliputi :\r\n- pengawasan ketatausahaan,\r\n- pengawasan kepegawaian,\r\n- pengawasan keuangan,\r\n- pengawasan perlengkapan,\r\ntermasuk Laporan Hasil Pemeriksaan (LHP) dan tindak lanjut pemeriksaan.'),
 (264, 'PS.01', 'TEKNIS', 'Surat-surat yang berkenaan dengan pengawasan di bidang teknis peradilan mulai dari perencanaan, pelaksanaan dan Laporan Hasil Pemeriksaan (LHP) dan tindak lanjut pemeriksaan.'),
 (265, '', '', '');
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `tb_asal_tujuan`
 --
-
 CREATE TABLE `tb_asal_tujuan` (
   `id_asal_tujuan` int(11) NOT NULL,
   `asal_tujuan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 --
 -- Dumping data for table `tb_asal_tujuan`
 --
-
 INSERT INTO `tb_asal_tujuan` (`id_asal_tujuan`, `asal_tujuan`) VALUES
 (2, 'Kantor desa'),
 (3, 'Kantor Pengadilan');
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `tb_disposisi`
 --
-
 CREATE TABLE `tb_disposisi` (
   `id` int(9) NOT NULL,
   `no_surat` varchar(255) NOT NULL,
@@ -204,20 +182,15 @@ CREATE TABLE `tb_disposisi` (
   `kode_surat` int(11) NOT NULL,
   `tujuan` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 --
 -- Dumping data for table `tb_disposisi`
 --
-
 INSERT INTO `tb_disposisi` (`id`, `no_surat`, `tgl_surat`, `tanggal_terima`, `asal_surat`, `sifat_surat`, `perihal`, `no_agenda`, `teruskan`, `ket`, `sifat_dispos`, `batas`, `indeks`, `kode_surat`, `tujuan`) VALUES
 (24, '1', '2021-02-16', '2021-02-16', '3', 'sp', 'pengumuman', '0001', '2', 'Tolong segera di proses ya', 'Penting', '2021-02-20', '12', 11, 4);
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `tb_profile`
 --
-
 CREATE TABLE `tb_profile` (
   `kota` varchar(255) NOT NULL,
   `lembaga` varchar(255) NOT NULL,
@@ -225,20 +198,15 @@ CREATE TABLE `tb_profile` (
   `telpon` varchar(255) NOT NULL,
   `foto` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 --
 -- Dumping data for table `tb_profile`
 --
-
 INSERT INTO `tb_profile` (`kota`, `lembaga`, `alamat`, `telpon`, `foto`) VALUES
 ('Kota bekasi', 'Kantor pertanahan', 'Jl.pahlawan bekasi barat', '081214600799', 'bekasi.png');
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `tb_surat_keluar`
 --
-
 CREATE TABLE `tb_surat_keluar` (
   `id` int(9) NOT NULL,
   `no_surat` varchar(255) NOT NULL,
@@ -252,21 +220,16 @@ CREATE TABLE `tb_surat_keluar` (
   `tujuan` int(11) NOT NULL,
   `tahun` varchar(4) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 --
 -- Dumping data for table `tb_surat_keluar`
 --
-
 INSERT INTO `tb_surat_keluar` (`id`, `no_surat`, `tgl_surat`, `kepada`, `sifat_surat`, `perihal`, `no_agenda`, `kode_surat`, `foto`, `tujuan`, `tahun`) VALUES
 (11, '1', '2021-02-16', 3, 'Sangat Penting', 'daftar inventaris kantor', '0001', 264, 'awal bayar indihome.jpg', 0, '2021'),
 (12, '1', '2021-03-12', 3, 'Biasa', 'asdasdasdasdasd', '0002', 1, '1.1.jpg', 4, '2021');
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `tb_surat_masuk`
 --
-
 CREATE TABLE `tb_surat_masuk` (
   `id` int(9) NOT NULL,
   `no_surat` varchar(255) NOT NULL,
@@ -284,42 +247,32 @@ CREATE TABLE `tb_surat_masuk` (
   `disposisi` int(11) NOT NULL,
   `tahun` varchar(4) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 --
 -- Dumping data for table `tb_surat_masuk`
 --
-
 INSERT INTO `tb_surat_masuk` (`id`, `no_surat`, `tgl_surat`, `tanggal_terima`, `asal_surat`, `sifat_surat`, `perihal`, `no_agenda`, `file_surat`, `status`, `tujuan`, `kode_surat`, `indeks`, `disposisi`, `tahun`) VALUES
 (16, '1', '2021-02-16', '2021-02-16', 3, 'sp', 'pengumuman', '0001', '1..jpeg', 1, 4, 11, '12', 2, '2021'),
 (17, '23', '2021-02-18', '2021-02-18', 2, 'b', 'pengumuman', '0002', 'Cetak Slip Alamat.pdf', 0, 4, 1, 'penting', 0, '2021'),
 (18, '23', '2021-05-11', '2021-05-12', 2, 'b', 'surat pengantar kelurahan', '0003', 'Cetak Slip Alamat.pdf', 0, 5, 5, '23', 0, '2021');
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `tb_tujuan`
 --
-
 CREATE TABLE `tb_tujuan` (
   `id_tujuan` int(11) NOT NULL,
   `nama_tujuan` varchar(255) NOT NULL,
   `no_hp` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 --
 -- Dumping data for table `tb_tujuan`
 --
-
 INSERT INTO `tb_tujuan` (`id_tujuan`, `nama_tujuan`, `no_hp`) VALUES
 (4, 'DIREKTUR BINGGANIS', '6281214600799'),
 (5, 'ahmad herudin', '6281214600799');
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `tb_user`
 --
-
 CREATE TABLE `tb_user` (
   `id` int(11) NOT NULL,
   `username` varchar(100) COLLATE latin1_general_ci NOT NULL,
@@ -329,121 +282,100 @@ CREATE TABLE `tb_user` (
   `foto` varchar(255) COLLATE latin1_general_ci NOT NULL,
   `level_pimpinan` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
 --
 -- Dumping data for table `tb_user`
 --
-
 INSERT INTO `tb_user` (`id`, `username`, `password`, `nama_user`, `level`, `foto`, `level_pimpinan`) VALUES
 (1, 'admin', 'admin', 'admin', 'admin', 'bekasi.png', 0),
 (10, 'tarjo', '123456', 'tarjo', 'user', '1.1.jpg', 4),
 (9, 'herudin', '123456', 'herudin', 'user', '364.jpg', 5);
-
 --
 -- Indexes for dumped tables
 --
-
 --
 -- Indexes for table `m_dispos`
 --
 ALTER TABLE `m_dispos`
   ADD PRIMARY KEY (`id_dispos`);
-
 --
 -- Indexes for table `ref_klasifikasi`
 --
 ALTER TABLE `ref_klasifikasi`
   ADD PRIMARY KEY (`id`);
-
 --
 -- Indexes for table `tb_asal_tujuan`
 --
 ALTER TABLE `tb_asal_tujuan`
   ADD PRIMARY KEY (`id_asal_tujuan`);
-
 --
 -- Indexes for table `tb_disposisi`
 --
 ALTER TABLE `tb_disposisi`
   ADD PRIMARY KEY (`id`);
-
 --
 -- Indexes for table `tb_surat_keluar`
 --
 ALTER TABLE `tb_surat_keluar`
   ADD PRIMARY KEY (`id`);
-
 --
 -- Indexes for table `tb_surat_masuk`
 --
 ALTER TABLE `tb_surat_masuk`
   ADD PRIMARY KEY (`id`);
-
 --
 -- Indexes for table `tb_tujuan`
 --
 ALTER TABLE `tb_tujuan`
   ADD PRIMARY KEY (`id_tujuan`);
-
 --
 -- Indexes for table `tb_user`
 --
 ALTER TABLE `tb_user`
   ADD PRIMARY KEY (`id`);
-
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
 --
 -- AUTO_INCREMENT for table `m_dispos`
 --
 ALTER TABLE `m_dispos`
   MODIFY `id_dispos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT for table `ref_klasifikasi`
 --
 ALTER TABLE `ref_klasifikasi`
   MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
-
 --
 -- AUTO_INCREMENT for table `tb_asal_tujuan`
 --
 ALTER TABLE `tb_asal_tujuan`
   MODIFY `id_asal_tujuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `tb_disposisi`
 --
 ALTER TABLE `tb_disposisi`
   MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
 --
 -- AUTO_INCREMENT for table `tb_surat_keluar`
 --
 ALTER TABLE `tb_surat_keluar`
   MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
 -- AUTO_INCREMENT for table `tb_surat_masuk`
 --
 ALTER TABLE `tb_surat_masuk`
   MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
 --
 -- AUTO_INCREMENT for table `tb_tujuan`
 --
 ALTER TABLE `tb_tujuan`
   MODIFY `id_tujuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

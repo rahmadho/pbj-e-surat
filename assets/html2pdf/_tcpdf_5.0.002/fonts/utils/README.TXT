@@ -1,13 +1,8 @@
 TCPDF Fonts
-
 TCPDF supports TrueTypeUnicode (UTF-8 Unicode), OpenTypeUnicode, TrueType, OpenType, Type1, CID-0 and Core (standard) fonts.
-
 There are two ways to use a new font: embedding it in the PDF or not. When a font is not embedded, it is searched in the system. The advantage is that the PDF file is lighter; on the other hand, if it is not available, a substitution font is used. So it is preferable to ensure that the needed font is installed on the client systems. If the file is to be viewed by a large audience, it is recommended to embed.
-
 The fonts that could be not embedded are only the standard core fonts and CID-0 fonts.
-
 The PDF Core (standard) fonts are:
-
     * courier : Courier
     * courierb : Courier Bold
     * courierbi : Courier Bold Italic
@@ -22,50 +17,31 @@ The PDF Core (standard) fonts are:
     * timesbi : Times New Roman Bold Italic
     * timesi : Times New Roman Italic
     * zapfdingbats : Zapf Dingbats
-
 Setting up a font for usage with TCPDF requires the following steps:
-
    1. Convert all font filenames to lowercase and rename using the following schema:
           * [basic-font-name-in-lowercase].ttf for regular font
           * [basic-font-name-in-lowercase]b.ttf for bold variation
           * [basic-font-name-in-lowercase]i.ttf for oblique variation
           * [basic-font-name-in-lowercase]bi.ttf for bold oblique variation
-
    2. Generate the font's metrics file.
           * For Type1 font files this first step is not necessary because the AFM file is usually shipped with the font. In case you have only a metric file in PFM format, use the pfm2afm utility (fonts/utils/pfm2afm) to get the AFM file. If you own a Type1 font in ASCII format (.pfa), you can convert it to binary format with Type 1 utilities.
           * For TrueTypeUnicode or TrueType font files, use the the provided ttf2ufm utility (fonts/utils/ttf2ufm):
-
             $ ttf2ufm -a -F myfont.ttf
-
           * For OpenTypeUnicode or OpenType font files, use the the provided ttf2ufm utility (fonts/utils/ttf2ufm):
-
             $ ttf2ufm -a -F myfont.otf
-
    3. Run makefont.php script.
           * For TrueTypeUnicode:
-
             $ php -q makefont.php myfont.ttf myfont.ufm
-
           * For OpenTypeUnicode:
-
             $ php -q makefont.php myfont.otf myfont.ufm
-
           * For TrueType:
-
             $ php -q makefont.php myfont.ttf myfont.afm
-
           * For OpenType:
-
             $ php -q makefont.php myfont.otf myfont.afm
-
           * For Type1:
-
             $ php -q makefont.php myfont.pfb myfont.afm
-
       You may also specify additional parameters:
-
       MakeFont(string $fontfile, string $fmfile [, boolean $embedded [, $enc="cp1252" [, $patch=array()]]])
-
           * $fontfile : Path to the .ttf or .pfb file.
           * $fmfile : Path to the .afm file for Type1 and TrueType or .ufm for TrueTypeUnicode.
           * $embedded : Set to false to not embed the font, true otherwise (default).
@@ -92,7 +68,6 @@ Setting up a font for usage with TCPDF requires the following steps:
                 o koi8-u (Ukrainian)
             Of course, the font must contain the characters corresponding to the chosen encoding. The encodings which begin with cp are those used by Windows; Linux systems usually use ISO.
           * $patch : Optional modification of the encoding. Empty by default. This parameter gives the possibility to alter the encoding. Sometimes you may want to add some characters. For instance, ISO-8859-1 does not contain the euro symbol. To add it at position 164, pass array(164=>'Euro').
-
    4. Edit and copy resulting files by case:
           * For embedded fonts: copy the resulting .php, .z and .ctg.z (if available) files to the TCPDF fonts directory.
           * For not-embedding the font, edit the .php file and comment the $file entry.
@@ -105,26 +80,21 @@ Setting up a font for usage with TCPDF requires the following steps:
                         $enc='UniCNS-UTF16-H';
                         $cidinfo=array('Registry'=>'Adobe', 'Ordering'=>'CNS1','Supplement'=>0);
                         include(dirname(__FILE__).'/uni2cid_ac16.php');
-
                       + // Chinese Traditional
                         $enc='UniGB-UTF16-H';
                         $cidinfo=array('Registry'=>'Adobe', 'Ordering'=>'GB1','Supplement'=>2);
                         include(dirname(__FILE__).'/uni2cid_ag15.php');
-
                       + // Korean
                         $enc='UniKS-UTF16-H';
                         $cidinfo=array('Registry'=>'Adobe', 'Ordering'=>'Korea1','Supplement'=>0);
                         include(dirname(__FILE__).'/uni2cid_ak12.php');
-
                       + // Japanese
                         $enc='UniJIS-UTF16-H';
                         $cidinfo=array('Registry'=>'Adobe', 'Ordering'=>'Japan1','Supplement'=>5);
                         include(dirname(__FILE__).'/uni2cid_aj16.php');
-
                 o copy the .php file to the TCPDF fonts directory.
    5. Rename php font files variations using the following schema:
           * [basic-font-name-in-lowercase].php for regular font
           * [basic-font-name-in-lowercase]b.php for bold variation
           * [basic-font-name-in-lowercase]i.php for oblique variation
           * [basic-font-name-in-lowercase]bi.php for bold oblique variation
-

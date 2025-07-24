@@ -3,7 +3,6 @@
 table.tableau { text-align: left; }
 table.tableau td { width: 15mm; font-family: courier; }
 table.tableau th { width: 15mm; font-family: courier; }
-
 .ul1
 {
     list-style-image: url(./res/puce2.gif);

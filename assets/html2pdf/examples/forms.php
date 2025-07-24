@@ -12,7 +12,6 @@
  * isset($_GET['vuehtml']) is not mandatory
  * it allow to display the result in the HTML format
  */
-
     // for display the post information
     if (isset($_POST['test'])) {
         echo '<pre>';
@@ -20,12 +19,10 @@
         echo '</pre>';
         exit;
     }
-
     // get the HTML
     ob_start();
     include(dirname(__FILE__).'/res/forms.php');
     $content = ob_get_clean();
-
     // convert to PDF
     require_once(dirname(__FILE__).'/../html2pdf.class.php');
     try

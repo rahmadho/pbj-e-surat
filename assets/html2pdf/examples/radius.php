@@ -40,7 +40,6 @@
 </page>
 <?php
      $content = ob_get_clean();
-
     // convert to PDF
     require_once(dirname(__FILE__).'/../html2pdf.class.php');
     try

@@ -5,26 +5,22 @@ table
     width:  100%;
     border: solid 1px #5544DD;
 }
-
 th
 {
     text-align: center;
     border: solid 1px #113300;
     background: #EEFFEE;
 }
-
 td
 {
     text-align: left;
     border: solid 1px #55DD44;
 }
-
 td.col1
 {
     border: solid 1px red;
     text-align: right;
 }
-
 -->
 </style>
 <span style="font-size: 20px; font-weight: bold">Démonstration des retour à la ligne automatique, ainsi que des sauts de page automatique<br></span>

@@ -39,7 +39,6 @@
 //    
 //    See LICENSE.TXT file for more information.
 //============================================================+
-
 /**
  * Process all TTF files on current directory to build TCPDF compatible font files.
  * @package com.tecnick.tcpdf
@@ -49,10 +48,8 @@
  * @link www.tecnick.com
  * @since 2008-12-07
  */
-
 /**
  */
-
 // read directory for files (only graphics files).
 $handle = opendir('.');
 while($file = readdir($handle)) {
@@ -64,7 +61,6 @@ while($file = readdir($handle)) {
 	}
 }
 closedir($handle);
-
 //============================================================+
 // END OF FILE                                                 
 //============================================================+

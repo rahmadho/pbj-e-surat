@@ -12,19 +12,16 @@ ul
     background: #FFDDDD;
     border: solid 1px #FF0000;
 }
-
 ol
 {
     background: #DDFFDD;
     border: solid 1px #00FF00;
 }
-
 ul li
 {
     background: #DDFFAA;
     border: solid 1px #AAFF00;
 }
-
 ol li
 {
     background: #AADDFF;

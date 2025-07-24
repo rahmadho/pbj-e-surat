@@ -2,13 +2,11 @@
  * Component: Timeline
  * -------------------
  */
-
 .timeline {
   position: relative;
   margin: 0 0 30px 0;
   padding: 0;
   list-style: none;
-
   // The line
   &:before {
     content: '';
@@ -21,13 +19,11 @@
     margin: 0;
     .border-radius(2px);
   }
-
   > li {
     position: relative;
     margin-right: 10px;
     margin-bottom: 15px;
     .clearfix();
-
     // The content
     > .timeline-item {
       .box-shadow(@box-boxshadow);
@@ -39,7 +35,6 @@
       margin-right: 15px;
       padding: 0;
       position: relative;
-
       // The time and header
       > .time {
         color: #999;
@@ -62,9 +57,7 @@
       > .timeline-body, > .timeline-footer {
         padding: 10px;
       }
-
     }
-
     // The icons
     > .fa,
     > .glyphicon,
@@ -82,7 +75,6 @@
       top: 0;
     }
   }
-
   // Time label
   > .time-label {
     > span {
@@ -90,12 +82,10 @@
       padding: 5px;
       display: inline-block;
       background-color: #fff;
-
       .border-radius(4px);
     }
   }
 }
-
 .timeline-inverse {
   > li {
     > .timeline-item {

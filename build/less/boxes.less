@@ -10,7 +10,6 @@
   margin-bottom: 20px;
   width: 100%;
   box-shadow: @box-boxshadow;
-
   // Box color variations
   &.box-primary {
     border-top-color: @light-blue;
@@ -30,7 +29,6 @@
   &.box-default {
     border-top-color: @gray-lte;
   }
-
   // collapsed mode
   &.collapsed-box {
     .box-body,
@@ -38,7 +36,6 @@
       display: none;
     }
   }
-
   .nav-stacked {
     > li {
       border-bottom: 1px solid @box-border-color;
@@ -48,7 +45,6 @@
       }
     }
   }
-
   // fixed height to 300px
   &.height-control {
     .box-body {
@@ -56,18 +52,15 @@
       overflow: auto;
     }
   }
-
   .border-right {
     border-right: 1px solid @box-border-color;
   }
   .border-left {
     border-left: 1px solid @box-border-color;
   }
-
   //SOLID BOX
   //---------
   //use this class to get a colored header and borders
-
   &.box-solid {
     border-top: 0;
     > .box-header {
@@ -81,7 +74,6 @@
         }
       }
     }
-
     // Box color variations
     &.box-default {
       .box-solid-variant(@gray-lte, #444);
@@ -101,28 +93,23 @@
     &.box-success {
       .box-solid-variant(@green);
     }
-
     > .box-header > .box-tools .btn {
       border: 0;
       box-shadow: none;
     }
-
     // Fix font color for tiles
     &[class*='bg'] {
       > .box-header {
         color: #fff;
       }
     }
-
   }
-
   //BOX GROUP
   .box-group {
     > .box {
       margin-bottom: 5px;
     }
   }
-
   // jQuery Knob in a box
   .knob-label {
     text-align: center;
@@ -132,7 +119,6 @@
     margin-bottom: 0.3em;
   }
 }
-
 .box,
 .overlay-wrapper {
   // Box overlay for LOADING STATE effect
@@ -144,7 +130,6 @@
     width: 100%;
     height: 100%;
   }
-
   .overlay {
     z-index: 50;
     background: rgba(255, 255, 255, 0.7);
@@ -159,26 +144,22 @@
       font-size: 30px;
     }
   }
-
   .overlay.dark {
     background: rgba(0, 0, 0, 0.5);
   }
 }
-
 //Add clearfix to header, body and footer
 .box-header,
 .box-body,
 .box-footer {
   .clearfix();
 }
-
 //Box header
 .box-header {
   color: #444;
   display: block;
   padding: @box-padding;
   position: relative;
-
   //Add bottom border
   &.with-border {
     border-bottom: 1px solid @box-border-color;
@@ -186,7 +167,6 @@
       border-bottom: none;
     }
   }
-
   //Icons and box title
   > .fa,
   > .glyphicon,
@@ -209,20 +189,17 @@
     [data-toggle="tooltip"] {
       position: relative;
     }
-
     &.pull-right {
       .dropdown-menu {
         right: 0;
         left: auto;
       }
     }
-
     .dropdown-menu > li > a {
       color: #444!important;
     }
   }
 }
-
 //Box Tools Buttons
 .btn-box-tool {
   padding: 5px;
@@ -237,7 +214,6 @@
     box-shadow: none;
   }
 }
-
 //Box Body
 .box-body {
   .border-radius(0; 0; @box-border-radius; @box-border-radius);
@@ -249,19 +225,16 @@
   > .table {
     margin-bottom: 0;
   }
-
   // Calendar within the box body
   .fc {
     margin-top: 5px;
   }
-
   .full-width-chart {
     margin: -19px;
   }
   &.no-padding .full-width-chart {
     margin: -9px;
   }
-
   .box-pane {
     .border-radius(0; 0; @box-border-radius; 0);
   }
@@ -269,7 +242,6 @@
     .border-radius(0; 0; 0; @box-border-radius);
   }
 }
-
 //Box footer
 .box-footer {
   .border-radius(0; 0; @box-border-radius; @box-border-radius);
@@ -277,7 +249,6 @@
   padding: @box-padding;
   background-color: @box-footer-bg;
 }
-
 .chart-legend {
   &:extend(.list-unstyled);
   margin: 10px 0;
@@ -288,7 +259,6 @@
     }
   }
 }
-
 //Comment Box
 .box-comments {
   background: #f7f7f7;
@@ -321,12 +291,9 @@
     font-size: 12px;
   }
 }
-
 //Widgets
 //-----------
-
 /* Widget: TODO LIST */
-
 .todo-list {
   margin: 0;
   padding: 0;
@@ -343,23 +310,19 @@
     &:last-of-type {
       margin-bottom: 0;
     }
-
     > input[type='checkbox'] {
       margin: 0 10px 0 5px;
     }
-
     .text {
       display: inline-block;
       margin-left: 5px;
       font-weight: 600;
     }
-
     // Time labels
     .label {
       margin-left: 10px;
       font-size: 9px;
     }
-
     // Tools and options box
     .tools {
       display: none;
@@ -370,25 +333,21 @@
         margin-right: 5px;
         cursor: pointer;
       }
-
     }
     &:hover .tools {
       display: inline-block;
     }
-
     &.done {
       color: #999;
       .text {
         text-decoration: line-through;
         font-weight: 500;
       }
-
       .label {
         background: @gray-lte !important;
       }
     }
   }
-
   // Color varaity
   .danger {
     border-left-color: @red;
@@ -405,21 +364,16 @@
   .primary {
     border-left-color: @light-blue;
   }
-
   .handle {
     display: inline-block;
     cursor: move;
     margin: 0 5px;
   }
-
 }
-
 // END TODO WIDGET
-
 /* Chat widget (DEPRECATED - this will be removed in the next major release. Use Direct Chat instead)*/
 .chat {
   padding: 5px 20px 5px 10px;
-
   .item {
     .clearfix();
     margin-bottom: 10px;
@@ -430,14 +384,12 @@
       border: 2px solid transparent;
       .border-radius(50%);
     }
-
     > .online {
       border: 2px solid @green;
     }
     > .offline {
       border: 2px solid @red;
     }
-
     // The message body
     > .message {
       margin-left: 55px;
@@ -447,7 +399,6 @@
         font-weight: 600;
       }
     }
-
     // The attachment
     > .attachment {
       .border-radius(@attachment-border-radius);
@@ -465,21 +416,16 @@
         font-size: 13px;
         font-style: italic;
         margin: 0;
-
       }
       .clearfix();
     }
   }
-
 }
-
 //END CHAT WIDGET
-
 //Input in box
 .box-input {
   max-width: 200px;
 }
-
 //A fix for panels body text color when placed within
 // a modal
 .modal {

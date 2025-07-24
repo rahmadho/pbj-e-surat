@@ -4,58 +4,40 @@ include "../../koneksi/koneksi.php";
 $sql2 = $koneksi->query("select * from tb_profile ");
   $profile=$sql2->fetch_assoc();
 ?>
-
     <style type="text/css">
-
 	.tabel{border-collapse: collapse;}
 	.tabel th{padding: 8px 5px; background-color: #cccccc;}
 	.tabel td{padding: 8px 5px;}
 	 img{width:125px; height:130px;}
 	 td{font-size:13px;}
 	 th{font-size:10px;}
-
 	 .style2 {
     color: black;
     font-weight: bold;
     margin-left:20px ;
-
 }
 	</style>
-
-
   <script>
   
-
       window.print();
       window.onfocus=function() {window.close();}
         
   
-
 </script>
 </head>
-
 <body onload="window.print()">
-
-
 <?php 
-
     
   $id = $_GET['id'];
   $sql1 = $koneksi->query("select * from tb_disposisi,  m_dispos, tb_asal_tujuan, ref_klasifikasi where tb_disposisi.teruskan=m_dispos.id_dispos and tb_disposisi.kode_surat=ref_klasifikasi.id and tb_disposisi.asal_surat=tb_asal_tujuan.id_asal_tujuan and tb_disposisi.id='$id'");
   $tampil=$sql1->fetch_assoc();
-
  ?>
-
   <?php
-
    
     $sql = $koneksi->query("select * from tb_profile");
     $data = $sql->fetch_assoc();
-
 ?>
-
     
-
 <table class="tabel" width="474" border="1">
   <tr>
     <td height="23" colspan="2" valign="top"><strong style="font-size: 18px;"><?php echo $data['lembaga'] ?> </strong><br> <?php echo $data['alamat'] ?></td>
@@ -98,6 +80,4 @@ $sql2 = $koneksi->query("select * from tb_profile ");
     <td width="242" valign="top">Diteruskan Kepada <br> <?php echo $tampil['nama_bagian'] ?></td>
   </tr>
 </table>
-
-
   </tbody>

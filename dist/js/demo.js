@@ -6,18 +6,14 @@
  */
 $(function () {
   'use strict'
-
   /**
    * Get access to plugins
    */
-
   $('[data-toggle="control-sidebar"]').controlSidebar()
   $('[data-toggle="push-menu"]').pushMenu()
-
   var $pushMenu       = $('[data-toggle="push-menu"]').data('lte.pushmenu')
   var $controlSidebar = $('[data-toggle="control-sidebar"]').data('lte.controlsidebar')
   var $layout         = $('body').data('lte.layout')
-
   /**
    * List of all the available skins
    *
@@ -37,7 +33,6 @@ $(function () {
     'skin-purple-light',
     'skin-green-light'
   ]
-
   /**
    * Get a prestored setting
    *
@@ -51,7 +46,6 @@ $(function () {
       window.alert('Please use a modern browser to properly view this template!')
     }
   }
-
   /**
    * Store a new settings in the browser
    *
@@ -66,7 +60,6 @@ $(function () {
       window.alert('Please use a modern browser to properly view this template!')
     }
   }
-
   /**
    * Toggles layout classes
    *
@@ -82,7 +75,6 @@ $(function () {
     }
     $controlSidebar.fix()
   }
-
   /**
    * Replaces the old skin with the new skin
    * @param String cls the new skin class
@@ -92,12 +84,10 @@ $(function () {
     $.each(mySkins, function (i) {
       $('body').removeClass(mySkins[i])
     })
-
     $('body').addClass(cls)
     store('skin', cls)
     return false
   }
-
   /**
    * Retrieve default settings and apply them to the template
    *
@@ -107,7 +97,6 @@ $(function () {
     var tmp = get('skin')
     if (tmp && $.inArray(tmp, mySkins))
       changeSkin(tmp)
-
     // Add the change skin listener
     $('[data-skin]').on('click', function (e) {
       if ($(this).hasClass('knob'))
@@ -115,21 +104,17 @@ $(function () {
       e.preventDefault()
       changeSkin($(this).data('skin'))
     })
-
     // Add the layout manager
     $('[data-layout]').on('click', function () {
       changeLayout($(this).data('layout'))
     })
-
     $('[data-controlsidebar]').on('click', function () {
       changeLayout($(this).data('controlsidebar'))
       var slide = !$controlSidebar.options.slide
-
       $controlSidebar.options.slide = slide
       if (!slide)
         $('.control-sidebar').removeClass('control-sidebar-open')
     })
-
     $('[data-sidebarskin="toggle"]').on('click', function () {
       var $sidebar = $('.control-sidebar')
       if ($sidebar.hasClass('control-sidebar-dark')) {
@@ -140,14 +125,12 @@ $(function () {
         $sidebar.addClass('control-sidebar-dark')
       }
     })
-
     $('[data-enable="expandOnHover"]').on('click', function () {
       $(this).attr('disabled', true)
       $pushMenu.expandOnHover()
       if (!$('body').hasClass('sidebar-collapse'))
         $('[data-layout="sidebar-collapse"]').click()
     })
-
     //  Reset options
     if ($('body').hasClass('fixed')) {
       $('[data-layout="fixed"]').attr('checked', 'checked')
@@ -158,29 +141,23 @@ $(function () {
     if ($('body').hasClass('sidebar-collapse')) {
       $('[data-layout="sidebar-collapse"]').attr('checked', 'checked')
     }
-
   }
-
   // Create the new tab
   var $tabPane = $('<div />', {
     'id'   : 'control-sidebar-theme-demo-options-tab',
     'class': 'tab-pane active'
   })
-
   // Create the tab button
   var $tabButton = $('<li />', { 'class': 'active' })
     .html('<a href=\'#control-sidebar-theme-demo-options-tab\' data-toggle=\'tab\'>'
       + '<i class="fa fa-wrench"></i>'
       + '</a>')
-
   // Add the tab button to the right sidebar tabs
   $('[href="#control-sidebar-home-tab"]')
     .parent()
     .before($tabButton)
-
   // Create the menu
   var $demoSettings = $('<div />')
-
   // Layout options
   $demoSettings.append(
     '<h4 class="control-sidebar-heading">'
@@ -236,7 +213,6 @@ $(function () {
     + '</div>'
   )
   var $skinsList = $('<ul />', { 'class': 'list-unstyled clearfix' })
-
   // Dark sidebar skins
   var $skinBlue =
         $('<li />', { style: 'float:left; width: 33.33333%; padding: 5px;' })
@@ -286,7 +262,6 @@ $(function () {
             + '</a>'
             + '<p class="text-center no-margin">Yellow</p>')
   $skinsList.append($skinYellow)
-
   // Light sidebar skins
   var $skinBlueLight =
         $('<li />', { style: 'float:left; width: 33.33333%; padding: 5px;' })
@@ -336,14 +311,10 @@ $(function () {
             + '</a>'
             + '<p class="text-center no-margin" style="font-size: 12px">Yellow Light</p>')
   $skinsList.append($skinYellowLight)
-
   $demoSettings.append('<h4 class="control-sidebar-heading">Skins</h4>')
   $demoSettings.append($skinsList)
-
   $tabPane.append($demoSettings)
   $('#control-sidebar-home-tab').after($tabPane)
-
   setup()
-
   $('[data-toggle="tooltip"]').tooltip()
 })

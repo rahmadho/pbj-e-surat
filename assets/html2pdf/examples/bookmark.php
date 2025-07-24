@@ -12,7 +12,6 @@
  * isset($_GET['vuehtml']) is not mandatory
  * it allow to display the result in the HTML format
  */
-
 ob_start();
 ?>
 <style type="text/css">
@@ -22,7 +21,6 @@ ob_start();
     h1 {color: #000033}
     h2 {color: #000055}
     h3 {color: #000077}
-
     div.niveau
     {
         padding-left: 5mm;
@@ -98,7 +96,6 @@ ob_start();
 </page>
 <?php
     $content = ob_get_clean();
-
     require_once(dirname(__FILE__).'/../html2pdf.class.php');
     try
     {

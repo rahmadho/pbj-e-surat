@@ -1,8 +1,6 @@
 This is the Unicode coverage file for DejaVu fonts
 ($Id$)
-
 Control and similar characters are discounted from totals.
-
                                                 Sans               Serif              Sans Mono          
 U+0000 Basic Latin                              100% (95/95)       100% (95/95)       100% (95/95)      
 U+0080 Latin-1 Supplement                       100% (96/96)       100% (96/96)       100% (96/96)      

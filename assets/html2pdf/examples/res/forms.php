@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_SERVER['REQUEST_URI'])) {
     $url = $_SERVER['REQUEST_URI'];
     if (substr($url, 0, 7)!=='http://') {
@@ -16,7 +15,6 @@ if (isset($_SERVER['REQUEST_URI'])) {
 <style type="text/css">
 li
 { font-size: 10pt; }
-
 input, textarea, select
 {
     border: dashed 1mm red;

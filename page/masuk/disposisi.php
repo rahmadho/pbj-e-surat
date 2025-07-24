@@ -1,157 +1,118 @@
 <script type="text/javascript">
-    function validasi(form){
-        if (form.catatan.value=="") {
+    function validasi(form) {
+        if (form.catatan.value == "") {
             alert("Catatan Surat Tidak Boleh Kosong");
             form.catatan.focus();
-            return(false);
+            return (false);
         }
-        return(true);
+        return (true);
     }
 </script>
-
 <?php
-
-    $id=$_GET['id'];
-    $sql = $koneksi->query("select * from tb_surat_masuk where no_agenda='$id'");
-    $data = $sql->fetch_assoc();
-
-    $tgl_surat = $data['tgl_surat'];
-    $tgl_terima= $data['tanggal_terima'];
-    $asal = $data['asal_surat'];
-    $sifat = $data['sifat_surat'];
-    $perihal = $data['perihal'];
-    $agenda = $data['no_agenda'];
-    $kode_surat = $data['kode_surat'];
-    $indeks = $data['indeks'];
-    $tujuan = $data['tujuan'];
-
+$id = (int) $_GET['id'];
+$sql = $koneksi->query("select * from tb_surat_masuk where id='$id'");
+$data = $sql->fetch_assoc();
+$tgl_surat = $data['tgl_surat'];
+$tgl_terima = $data['tanggal_terima'];
+$asal = $data['asal_surat'];
+$sifat = $data['sifat_surat'];
+$perihal = $data['perihal'];
+$agenda = $data['no_agenda'];
+$kode_surat = $data['kode_surat'];
+$indeks = $data['indeks'];
+$tujuan = $data['tujuan'];
 ?>
-
 <div class="box box-success box-solid">
-  <div class="box-header with-border">
-	Disposisi Surat Masuk
- </div>
-<div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12">
+    <div class="box-header with-border">
+        Disposisi Surat Masuk
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="POST" enctype="multipart/form-data" onsubmit="return validasi(this)">
+                    <div class="form-group">
+                        <label>Nomor Surat</label>
+                        <input class="form-control" name="no" value="<?php echo _post('no', $data['no_surat']) ?>" readonly="" />
+                    </div>
+                    <div class="form-group">
+                        <label>Perihal Surat</label>
+                        <input class="form-control" name="perihal" value="<?php echo _post('perihal', $data['perihal']) ?>" readonly="" />
+                    </div>
+                    <div class="form-group">
+                        <label>Diteruskan :</label>
+                        <select class="form-control" name="terus">
+                            <?php
+                            $m_dispos = $koneksi->query("select * from m_dispos");
+                            while ($disposisi = $m_dispos->fetch_assoc()) {
+                                $selected = _post('terus', $data['disposisi']) == $disposisi['id_dispos'] ? 'selected' : '';
+                                echo "<option value='$disposisi[id_dispos]' $selected>$disposisi[nama_bagian]</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Catatan :</label>
+                        <textarea class="form-control" rows="3" name="ket" id="catatan"><?php echo _post('ket') ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Sifat :</label>
+                        <select class="form-control" id="sifat" name="sifat_dispos">
+                            <option <?=_post('sifat_dispos') == 'Biasa' ? 'selected' : ''?> value="Biasa">Biasa</option>
+                            <option <?=_post('sifat_dispos') == 'Penting' ? 'selected' : ''?> value="Penting">Penting</option>
+                            <option <?=_post('sifat_dispos') == 'Sangat Penting' ? 'selected' : ''?> value="Sangat Penting">Sangat Penting</option>
+                            <option <?=_post('sifat_dispos') == 'Segera' ? 'selected' : ''?> value="Segera">Segera</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Batas Waktu</label>
+                        <input type="date" class="form-control" name="batas" value="<?php echo _post('batas', $data['batas']) ?>" />
+                    </div>
+                    <div>
+                        <input type="submit" name="simpan" value="Simpan" class="btn btn-success">
+                        <input type=button value=Kembali onclick=self.history.back() class="btn btn-info" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+if (is_post()) {
+    $no = _post('no');
+    $terus = _post('terus');
+    $ket = _post('ket');
+    $sifat_dispos = _post('sifat_dispos');
+    $batas = _post('batas');
+    $simpan = _post('simpan');
+    if ($simpan) {
+        $koneksi->begin_transaction();
+        try {
+            $query_disposisi = $koneksi->prepare("INSERT INTO tb_disposisi (id_surat_masuk, no_surat, tgl_surat, tanggal_terima, asal_surat, sifat_surat, perihal, no_agenda, teruskan, ket, sifat_dispos, batas, indeks, kode_surat, tujuan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $query_disposisi->bind_param("isssssssssssssi", $id, $no, $tgl_surat, $tgl_terima, $asal, $sifat, $perihal, $agenda, $terus, $ket, $sifat_dispos, $batas, $indeks, $kode_surat, $tujuan);
+            $query_disposisi->execute();
 
-                                    <form method="POST" enctype="multipart/form-data" onsubmit="return validasi(this)" >
-                                        
-                                        <div class="form-group">
-                                            <label>Nomor Surat</label>
-                                            <input class="form-control" name="no" value="<?php echo $data['no_surat'] ?>" readonly=""  />
+            $query_surat = $koneksi->prepare("UPDATE tb_surat_masuk set status=1, disposisi=? where id = ?");
+            $query_surat->bind_param("ii", $terus, $id);
+            $query_surat->execute();
+            
+            $m_dispos = $koneksi->query("select nama_bagian from m_dispos where id_dispos=$terus");
+            $bagian = $m_dispos->fetch_object();
 
-                                        </div>
+            if (!$bagian) throw new Exception("Tujuan disposisi tidak ditemukan");
 
-                                        <div class="form-group">
-                                            <label>Perihal Surat</label>
-                                            <input class="form-control" name="perihal" value="<?php echo $data['perihal'] ?>" readonly=""  />
+            log_history($koneksi, $id, "Disposisi surat ke $bagian->nama_bagian dientri oleh " . auth()->nama_user);
 
-                                        </div>
+            $koneksi->commit();
+            
+            $query_disposisi->close();
+            $query_surat->close();
 
-                                        <div class="form-group">
-
-                                            <label>Diteruskan :</label>
-                                            <select class="form-control" name="terus">
-
-                                                   <?php
-                                                      $sql = $koneksi->query("select * from m_dispos");
-                                                      while ($data=$sql->fetch_assoc()) {
-                                                        echo "
-
-                                                          <option value='$data[id_dispos]'>$data[nama_bagian]</option>
-
-                                                        ";
-                                                      }
-                                                     ?>
-                                                   
-                                                       
-
-                                            </select>
-                                        </div>
-
-                                        
-
-                                        <div class="form-group">
-                                              <label>Catatan :</label>
-                                              <textarea class="form-control" rows="3" name="ket" id="catatan"></textarea>
-                                        </div>
-
-                                        <div class="form-group">
-
-                                            <label>Sifat :</label>
-                                            <select class="form-control" id="sifat" name="sifat_dispos">
-
-                                                   
-                                                    <option value="Biasa">Biasa</option>
-                                                   <option value="Penting">Penting</option>
-                                                   <option value="Sangat Penting">Sangat Penting</option>
-                                                   <option value="Segera">Segera</option>
-                                                       
-
-                                            </select>
-                                        </div>
-
-                                         <div class="form-group">
-                                            <label>Batas Waktu</label>
-                                            <input type="date" class="form-control" name="batas"  />
-
-                                        </div>
-
-                                      
-
-                                        <div>
-
-                                        	<input type="submit" name="simpan" value="Simpan" class="btn btn-success">
-                                          <input type=button value=Kembali onclick=self.history.back() class="btn btn-info" />
-                                        </div>
-                                 </div>
-
-                                 </form>
-                              </div>
- 
-
-
- <?php
-
- 	$no = $_POST ['no'];
- 	$terus = $_POST ['terus'];
- 	$ket = $_POST ['ket'];
-  $sifat_dispos = $_POST ['sifat_dispos'];
-  $batas = $_POST ['batas'];
-
-    
-
-
- 	$simpan = $_POST ['simpan'];
-
-
- 	if ($simpan) {
-        
-
- 		$sql = $koneksi->query("insert into tb_disposisi (no_surat, tgl_surat, tanggal_terima, asal_surat, sifat_surat, perihal, no_agenda, teruskan, ket, sifat_dispos, batas, indeks, kode_surat, tujuan)values('$no', '$tgl_surat', '$tgl_terima', '$asal', '$sifat', '$perihal', '$agenda', '$terus', '$ket', '$sifat_dispos', '$batas', '$indeks', '$kode_surat', '$tujuan')");
-
-    $sql = $koneksi->query("update tb_surat_masuk set status=1, disposisi='$terus' where no_agenda = '$agenda'");
-
-
- 			if ($sql) {
-      echo "
-
-          <script>
-              setTimeout(function() {
-                  swal({
-                      title: 'Selamat!',
-                      text: 'Disposisi Berhasil !',
-                      type: 'success'
-                  }, function() {
-                      window.location = '?page=disposisi';
-                  });
-              }, 300);
-          </script>
-
-      ";
+            swal("success", "Berhasil!", "Disposisi Berhasil!", "?page=disposisi");
+        } catch (\Throwable $th) {
+            $koneksi->rollback();
+            swal("error", "Gagal!", "Disposisi Gagal! ".$th->getMessage());
+        }
+        $koneksi->close();
     }
-
-     }
-
- ?>
+}
+?>

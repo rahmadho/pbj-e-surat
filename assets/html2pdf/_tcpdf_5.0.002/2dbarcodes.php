@@ -38,7 +38,6 @@
 //               www.tecnick.com
 //               info@tecnick.com
 //============================================================+
-
 /**
  * PHP class to creates array representations for 2D barcodes to be used with TCPDF.
  * @package com.tecnick.tcpdf
@@ -49,7 +48,6 @@
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
  * @version 1.0.003
  */
-
 	/**
 	* PHP class to creates array representations for 2D barcodes to be used with TCPDF (http://www.tcpdf.org).<br>
 	* @name TCPDFBarcode
@@ -60,13 +58,11 @@
 	* @license http://www.gnu.org/copyleft/lesser.html LGPL
 	*/
 class TCPDF2DBarcode {
-
 	/**
 	 * @var array representation of barcode.
 	 * @access protected
 	 */
 	protected $barcode_array = false;
-
 	/**
 	 * This is the class constructor.
 	 * Return an array representations for 2D barcodes:<ul>
@@ -80,7 +76,6 @@ class TCPDF2DBarcode {
 	public function __construct($code, $type) {
 		$this->setBarcode($code, $type);
 	}
-
 	/**
 	 * Return an array representations of barcode.
  	 * @return array
@@ -88,7 +83,6 @@ class TCPDF2DBarcode {
 	public function getBarcodeArray() {
 		return $this->barcode_array;
 	}
-
 	/**
 	 * Set the barcode.
 	 * @param string $code code to print
@@ -148,7 +142,6 @@ class TCPDF2DBarcode {
 		}
 	}
 } // end of class
-
 //============================================================+
 // END OF FILE
 //============================================================+

@@ -85,7 +85,6 @@ foreach ($produits as $produit) {
                         <td style="width: 15%; border: solid 1px #000000;"><?php echo $produit[4];        ?></td>
                         <td style="width: 15%; border: solid 1px #000000;"><?php echo $produit[2]-$produit[4];        ?></td>
                     </tr>
-
 <?php
 }
 for ($i; $i<12; $i++) {

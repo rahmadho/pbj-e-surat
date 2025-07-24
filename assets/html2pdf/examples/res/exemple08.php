@@ -9,13 +9,11 @@ table
     text-align: center;
     vertical-align: middle;
 }
-
 td
 {
     padding: 1mm;
     border: solid 1mm black;
 }
-
 td.div
 {
     width: 110px;
@@ -23,7 +21,6 @@ td.div
     text-align: left;
     padding: 0
 }
-
 td.div div
 {
     margin: auto;
@@ -34,7 +31,6 @@ td.div div
     height: 65px;
     text-align: center;
 }
-
 -->
 </style>
 <page backcolor="#AACCFF" backleft="5mm" backright="5mm" backtop="10mm" backbottom="10mm" >

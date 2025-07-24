@@ -12,7 +12,6 @@
  * isset($_GET['vuehtml']) is not mandatory
  * it allow to display the result in the HTML format
  */
-
 $content = '
 <page>
     <draw style="margin: auto; width:180mm; height:240mm; background: #444444; border: solid 0.5mm #777777;">
@@ -126,7 +125,6 @@ $content = '
         </g>
     </draw>
 </page>';
-
     // onvert to PDF
     require_once(dirname(__FILE__).'/../html2pdf.class.php');
     try

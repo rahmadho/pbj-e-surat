@@ -9,7 +9,6 @@
  * @author    Laurent MINGUET <webmaster@html2pdf.fr>
  * @copyright 2016 Laurent MINGUET
  */
-
 if (isset($_SERVER['REQUEST_URI'])) {
     $generate = isset($_GET['make_pdf']);
     $nom = isset($_GET['nom']) ? $_GET['nom'] : 'inconnu';
@@ -22,11 +21,8 @@ if (isset($_SERVER['REQUEST_URI'])) {
     $nom = 'spipu';
     $url = 'http://localhost/html2pdf/examples/';
 }
-
 $nom = substr(preg_replace('/[^a-zA-Z0-9]/isU', '', $nom), 0, 26);
 $url.= '/res/exemple09.png.php?px=5&amp;py=20';
-
-
 if ($generate) {
     ob_start();
 } else {

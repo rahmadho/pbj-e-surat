@@ -12,7 +12,6 @@
  * isset($_GET['vuehtml']) is not mandatory
  * it allow to display the result in the HTML format
  */
-
     // get the HTML
      ob_start();
 ?>
@@ -23,13 +22,11 @@
 </page>
 <?php
     $content = ob_get_clean();
-
     // PDF script to execute
     $script = "
 var rep = app.response('Donnez votre nom');
 app.alert('Vous vous appelez '+rep);
 ";
-
     // convert to PDF
     require_once(dirname(__FILE__).'/../html2pdf.class.php');
     try

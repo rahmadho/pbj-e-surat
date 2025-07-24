@@ -1,12 +1,9 @@
 TCPDF - README
 ============================================================
-
 IF YOU'D LIKE TO SUPPORT TCPDF, PLEASE CONSIDER MAKING A 
 DONATION: 
 http://sourceforge.net/donate/index.php?group_id=128076
-
 ------------------------------------------------------------
-
 Name: TCPDF
 Version: 5.0.002
 Release date: 2010-05-06
@@ -50,19 +47,15 @@ Main Features:
 //  * automatic page numbering and page groups;
 //  * move and delete pages;
 //  * page compression (requires php-zlib extension);
-
-
 Installation (full instructions on http://www.tcpdf.org):
 	1. copy the folder on your Web server
 	2. set your installation path and other parameters on the config/tcpdf_config.php
 	3. call the examples/example_001.php page with your browser to see an example
-
 Source Code Documentation:
 	doc/index.html
 	
 For Additional Documentation:
 	http://www.tcpdf.org
-
 License
 	Copyright (C) 2002-2010 Nicola Asuni - Tecnick.com S.r.l.
 	
