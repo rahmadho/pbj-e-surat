@@ -88,6 +88,19 @@ if (strlen($tambah) == 1) {
                                     <label>Isi Ringkas :</label>
                                     <textarea class="form-control" rows="3" id="perihal" name="perihal"></textarea>
                                 </div>
+                                <?php if (is_admin()): ?>
+                                <div class="form-group">
+                                    <label>Dari Bagian :</label>
+                                    <select class="form-control select2" name="dispos">
+                                        <?php
+                                        $sql_dispos = $koneksi->query("select * from m_dispos");
+                                        while ($data_dispos = $sql_dispos->fetch_object()) {
+                                            echo "<option value='$data_dispos->id_dispos'>$data_dispos->nama_bagian</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="col-md-6">
@@ -108,7 +121,7 @@ if (strlen($tambah) == 1) {
                                 </div>
                                 <div class="form-group">
                                     <label>File Surat (Format pdf)</label>
-                                    <input type="file" name="foto" id="foto" />
+                                    <input type="file" name="foto" id="foto" accept=".pdf" />
                                 </div>
 
                                 <input type="submit" name="simpan" value="Simpan" class="btn btn-success">
@@ -122,32 +135,29 @@ if (strlen($tambah) == 1) {
     </div>
 </div>
 <?php
-if (is_post() && isset($_POST['simpan'])) {
+if (is_post() && _post('simpan')) {
     $tahun = date('Y');
-    $no = $_POST['no'];
-    $tgl = $_POST['tgl'];
-    $sifat = $_POST['sifat'];
-    $kepada = $_POST['kepada'];
-    $perihal = $_POST['perihal'];
-    $agenda = $_POST['agenda'];
-    $kode_surat = $_POST['kode_surat'];
+    $no = _post('no');
+    $tgl = _post('tgl');
+    $sifat = _post('sifat');
+    $kepada = (int) _post('kepada');
+    $perihal = _post('perihal');
+    $agenda = _post('agenda');
+    $kode_surat = (int) _post('kode_surat');
+    $dispos_id = (int) _post('dispos');
     $foto = $_FILES['foto']['name'];
     $lokasi = $_FILES['foto']['tmp_name'];
     $upload = move_uploaded_file($lokasi, "file/" . $foto);
     if ($upload) {
-        $simpan = $koneksi->query("insert into tb_surat_keluar (no_surat, tgl_surat,  kepada, sifat_surat, perihal, no_agenda, kode_surat, foto, tujuan, tahun)values('$no', '$tgl', '$kepada',  '$sifat',  '$perihal', '$agenda', '$kode_surat', '$foto', '$tujuan', '$tahun')");
-        if ($simpan) {
-            echo "<script>
-					    setTimeout(function() {
-					        swal({
-					            title: 'Selamat!',
-					            text: 'Data Berhasil Disimpan!',
-					            type: 'success'
-					        }, function() {
-					            window.location = '?page=keluar';
-					        });
-					    }, 300);
-					</script>";
+        $created_by = auth()->id;
+        try {
+            $simpan = $koneksi->prepare("INSERT INTO tb_surat_keluar (no_surat, tgl_surat, kepada, sifat_surat, perihal, no_agenda, kode_surat, foto, tahun, created_by, dispos_id)
+                values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $simpan->bind_param("ssisssisssi", $no, $tgl, $kepada, $sifat, $perihal, $agenda, $kode_surat, $foto, $tahun, $created_by, $dispos_id);
+            $simpan->execute();
+            swal("success", "Selamat!", "Data Berhasil Disimpan!", "?page=keluar");
+        } catch (\Throwable $th) {
+            swal("error", "Oops!", "Gagal Menyimpan Data! ".$th->getMessage(), "?page=keluar");
         }
     }
 }

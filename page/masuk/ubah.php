@@ -33,28 +33,20 @@ $asal_tujuan = $data['asal_surat'];
                     <div class="form-group">
                         <label>Sifat Surat :</label>
                         <select class="form-control" name="sifat">
-                            <option>--Pilih Sifat Surat--</option>
-                            <option value="b" <?php if ($data['sifat_surat'] == 'b') {
-                                echo "selected";
-                            } ?>>Biasa</option>
-                            <option value="p" <?php if ($data['sifat_surat'] == 'p') {
-                                echo "selected";
-                            } ?>>Penting
-                            </option>
-                            <option value="sp" <?php if ($data['sifat_surat'] == 'sp') {
-                                echo "selected";
-                            } ?>>Sangat
-                                Penting</option>
-                            <option value="s" <?php if ($data['sifat_surat'] == 's') {
-                                echo "selected";
-                            } ?>>Segera
-                            </option>
+                            <option value="">-- PILIH --</option>
+                            <?php 
+                                foreach (SIFAT_SURAT as $key => $sifat) {
+                                    $select = ($data['sifat_surat'] == $key ? "selected" : "");
+                                    echo "<option value='$key' $select>$sifat</option>";
+                                }
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Asal Surat :</label>
                         <select class="form-control select2" name="asal">
-                            <?php
+                            <option value="">-- PILIH --</option>
+                            <?php 
                             $sql = $koneksi->query("select * from tb_asal_tujuan");
                             while ($tampil_t = $sql->fetch_assoc()) {
                                 $pilih_t = ($tampil_t['id_asal_tujuan'] == $asal_tujuan ? "selected" : "");
@@ -74,12 +66,12 @@ $asal_tujuan = $data['asal_surat'];
                     <div class="form-group">
                         <label>Tujuan Surat :</label>
                         <select class="form-control select2" name="tujuan">
+                            <option value="">-- PILIH --</option>
                             <?php
                             $sql = $koneksi->query("select * from tb_tujuan");
-                            while ($tampil_t = $sql->fetch_assoc()) {
-                                $pilih_t = ($tampil_t['id_tujuan'] == $tujuan ? "selected" : "");
-                                echo "<option value='$tampil_t[id_tujuan]'  $pilih_t>$tampil_t[nama_tujuan]</option>";
-                            }
+                            $tampil_t = $sql->fetch_assoc();
+                            $pilih_t = ($tampil_t['id_tujuan'] == $tujuan ? "selected" : "");
+                            echo "<option value='$tampil_t[id_tujuan]' $pilih_t>$tampil_t[nama_tujuan]</option>";
                             ?>
                         </select>
                     </div>
@@ -89,6 +81,7 @@ $asal_tujuan = $data['asal_surat'];
                     <div class="form-group">
                         <label>Kode Surat :</label>
                         <select class="form-control select2" name="kode_surat">
+                            <option value="">-- PILIH --</option>
                             <?php
                             $sql = $koneksi->query("select * from ref_klasifikasi");
                             while ($tampil_t = $sql->fetch_assoc()) {
@@ -104,17 +97,18 @@ $asal_tujuan = $data['asal_surat'];
                     </div>
                     <div class="form-group">
                         <label>Tanggal Surat</label>
-                        <input type="date" data-datepicker class="form-control" name="tgl_surat" value="<?php echo $tgl_surat ?>" />
+                        <input type="text" readonly data-datepicker class="form-control bg-white" name="tgl_surat" value="<?php echo $tgl_surat ?>" />
                     </div>
                     <div class="form-group">
                         <label>Tanggal Terima</label>
-                        <input type="date" data-datepicker class="form-control" name="tgl_terima"
+                        <input type="text" readonly data-datepicker class="form-control bg-white" name="tgl_terima"
                             value="<?php echo $tanggal_terima ?>" />
                     </div>
                     <div class="form-group">
                         <label>File Surat (Format pdf)</label>
                         <input type="file" name="foto" id="foto" />
                     </div>
+                    <hr>
                     <div class="form-group">
                         <div style="display: flex; align-items: center; gap: 8px;">
                         <input type="checkbox" name="is_undangan" value="1" id="is_undangan" style="margin: 0;" <?php if ($agenda) { echo "checked"; } ?>>
@@ -130,7 +124,7 @@ $asal_tujuan = $data['asal_surat'];
                         <div class="col-md-6">
                             <div class="form-group">
                             <label>Tanggal Agenda</label>
-                            <input type="date" data-datepicker class="form-control" name="tgl_agenda" id="tgl_agenda" value="<?php echo $agenda?->tgl_agenda ?>" />
+                            <input type="text" readonly data-datepicker class="form-control bg-white" name="tgl_agenda" id="tgl_agenda" value="<?php echo $agenda?->tgl_agenda ?>" />
                             </div>
                         </div>
                         <div class="col-md-6">

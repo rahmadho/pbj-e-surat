@@ -1,58 +1,29 @@
-
 <div class="box box-success box-solid">
     <div class="box-header with-border">
-		Tambah Klasifikasi Surat
- </div>
-<div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <form method="POST" enctype="multipart/form-data" >
-                                       <div class="form-group">
-                                            <label>Kode </label>
-                                            <input class="form-control" name="kode"  />
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label>Nama </label>
-                                            <input class="form-control" name="nama" id="nama" />
-                                        </div>
-                                        <div class="form-group">
-                                              <label>Uraian :</label>
-                                              <textarea class="form-control" rows="3" name="uraian"></textarea>
-                                        </div>
-                                       
-                                        	<input type="submit" name="simpan" value="Simpan" class="btn btn-success">
-                                        </div>
-                                 </div>
-                                 </form>
-                              </div>
- </div>
- 
- 
- <?php
- 	$nama = $_POST['nama'];
-  $kode = $_POST['kode'];
-  $uraian = $_POST['uraian'];
- 	
- 	$simpan = $_POST['simpan'];
- 	if ($simpan) {
-        
- 		$sql = $koneksi->query("insert into ref_klasifikasi (kode, nama, uraian)values('$kode', '$nama', '$uraian')");
-    if ($sql) {
-      echo "
-          <script>
-              setTimeout(function() {
-                  swal({
-                      title: 'Selamat!',
-                      text: 'Data Berhasil Disimpan!',
-                      type: 'success'
-                  }, function() {
-                      window.location = '?page=klasifikasi';
-                  });
-              }, 300);
-          </script>
-      ";
-    
- 	}
-     }
- ?>
+        Tambah Klasifikasi Surat
+    </div>
+    <div class="panel-body">
+        <?php 
+        render("page/klasifikasi/form.php", $_POST);
+        ?>
+    </div>
+    <div class="panel-footer">
+        <button form="form" type="submit" name="simpan" class="btn btn-success">Simpan</button>
+    </div>
+</div>
+
+
+<?php
+if (is_post()) {
+    $nama = _post('nama');
+    $kode = _post('kode');
+    $uraian = _post('uraian');
+    try {
+        $sql = $koneksi->prepare("INSERT INTO ref_klasifikasi (kode, nama, uraian) VALUES (?, ?, ?)");
+        $sql->bind_param("sss", $kode, $nama, $uraian);
+        $sql->execute();
+        swal("success", "Selamat!", "Data Berhasil Disimpan!", "?page=klasifikasi");
+    } catch (\Throwable $th) {
+        swal("error", "Oops!", "Gagal Menyimpan Data", "?page=klasifikasi");
+    }
+}

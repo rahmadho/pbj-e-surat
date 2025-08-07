@@ -1,9 +1,20 @@
 <?php
-$id = $_GET['id'];
-$sql = $koneksi->query("select * from tb_surat_keluar where id='$id'");
-$data = $sql->fetch_assoc();
-$kode_surat = $data['kode_surat'];
-$asal_tujuan = $data['kepada'];
+$id = (int) _get('id');
+try {
+    $sql = $koneksi->query("SELECT * FROM tb_surat_keluar WHERE id=$id");
+    $data = $sql->fetch_object();
+    $kode_surat = $data->kode_surat;
+    $asal_tujuan = $data->kepada;
+    $dispos_id = $data->dispos_id;
+} catch (\Throwable $th) {
+    swal("error", "Oops!", "Gagal Mengambil Data! ".$th->getMessage(), "?page=keluar");
+}
+
+if (empty($data)) {
+  swal("error", "Oops!", "Data surat keluar tidak ditemukan", "?page=keluar");
+  exit;
+};
+
 ?>
 <div class="row">
   <div class="col-md-12">
@@ -20,27 +31,18 @@ $asal_tujuan = $data['kepada'];
                 <div class="form-group">
                   <label>NO Agenda</label>
                   <input class="form-control" name="agenda" id="agenda" readonly=""
-                    value="<?php echo $data['no_agenda'] ?>" />
+                    value="<?php echo $data->no_agenda ?>" />
                 </div>
                 <div class="form-group">
                   <label>Sifat Surat :</label>
                   <select class="form-control" name="sifat">
-                    <option>--Pilih Sifat Surat--</option>
-                    <option value="Biasa" <?php if ($data['sifat_surat'] == 'Biasa') {
-                      echo "selected";
-                    } ?>>Biasa</option>
-                    <option value="Penting" <?php if ($data['sifat_surat'] == 'Penting') {
-                      echo "selected";
-                    } ?>>Penting
-                    </option>
-                    <option value="Sangat Penting" <?php if ($data['sifat_surat'] == 'Sangat Penting') {
-                      echo "selected";
-                    } ?>>Sangat Penting</option>
-                    <option value="Segera" <?php if ($data['sifat_surat'] == 'Segera') {
-                      echo "selected";
-                    } ?>>Segera
-                    </option>
-
+                    <option value="">-- PILIH --</option>
+                    <?php 
+                        foreach (SIFAT_SURAT as $key => $sifat) {
+                            $select = ($data->sifat_surat == $sifat ? "selected" : "");
+                            echo "<option value='$sifat' $select>$sifat</option>";
+                        }
+                    ?>
                   </select>
                 </div>
                 <div class="form-group">
@@ -57,12 +59,26 @@ $asal_tujuan = $data['kepada'];
                 </div>
                 <div class="form-group">
                   <label>No Surat :</label>
-                  <input type="text" class="form-control" name="no" value="<?php echo $data['no_surat'] ?>" />
+                  <input type="text" class="form-control" name="no" value="<?php echo $data->no_surat ?>" />
                 </div>
                 <div class="form-group">
                   <label>Isi Ringkas :</label>
-                  <textarea class="form-control" rows="3" name="perihal"><?php echo $data['perihal'] ?></textarea>
+                  <textarea class="form-control" rows="3" name="perihal"><?php echo $data->perihal ?></textarea>
                 </div>
+                <?php if (is_admin()): ?>
+                  <div class="form-group">
+                      <label>Dari Bagian :</label>
+                      <select class="form-control select2" name="dispos" disabled>
+                          <?php
+                          $sql_dispos = $koneksi->query("SELECT * FROM m_dispos");
+                          while ($data_dispos = $sql_dispos->fetch_object()) {
+                              $select = ($data_dispos->id_dispos == $dispos_id ? "selected" : "");
+                              echo "<option value='$data_dispos->id_dispos' $select>$data_dispos->nama_bagian</option>";
+                          }
+                          ?>
+                      </select>
+                  </div>
+                <?php endif; ?>
               </div>
               <div class="col-md-6">
 
@@ -80,7 +96,7 @@ $asal_tujuan = $data['kepada'];
                 </div>
                 <div class="form-group">
                   <label>Tanggal Surat </label>
-                  <input type="date" data-datepicker class="form-control" name="tgl" value="<?php echo $data['tgl_surat'] ?>" />
+                  <input type="date" data-datepicker class="form-control" name="tgl" value="<?php echo $data->tgl_surat ?>" />
                 </div>
                 <div class="form-group">
                   <label>File Surat (Format pdf)</label>
@@ -99,13 +115,14 @@ $asal_tujuan = $data['kepada'];
 
 <?php
 if (is_post()) {
-  $no = $_POST['no'];
-  $tgl = $_POST['tgl'];
-  $sifat = $_POST['sifat'];
-  $kepada = $_POST['kepada'];
-  $perihal = $_POST['perihal'];
-  $agenda = $_POST['agenda'];
-  $kode_surat = $_POST['kode_surat'];
+  $no = _post('no');
+  $tgl = _post('tgl');
+  $sifat = _post('sifat');
+  $kepada = _post('kepada');
+  $perihal = _post('perihal');
+  $agenda = _post('agenda');
+  $kode_surat = _post('kode_surat');
+  $dispos_id = (int) _post('dispos');
   $foto = $_FILES['foto']['name'];
   $lokasi = $_FILES['foto']['tmp_name'];
   try {

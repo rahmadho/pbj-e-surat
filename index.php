@@ -1,8 +1,7 @@
 <?php
-error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
+// error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 session_start();
 include "koneksi/koneksi.php";
-include "include/tanggal.php";
 include "include/constant.php";
 include "include/helper.php";
 // echo "<pre>";
@@ -36,8 +35,38 @@ if (is_auth()) {
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="plugins/sw/dist/sweetalert.min.js"></script>
     <!-- Google Font -->
-    <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <style>
+      .bg-light {
+        background-color: #f9f9f9 !important;
+      }
+      .d-block {
+        display: block;
+      }
+      .timeline:before {
+        left: 0;
+      }
+      .timeline-item {
+        display: flex;
+        gap: 12px;
+        margin-left: 16px;
+      }
+      .mb-2 {
+        margin-bottom: 1rem;
+      }
+      .mt-2 {
+        margin-top: 1rem;
+      }
+      .pl-2 {
+        padding-left: 1rem!important;
+      }
+      .pr-2 {
+        padding-right: 1rem!important;
+      }
+      .bg-white {
+        background-color: #fff !important;
+      }
+    </style>
   </head>
   <body class="hold-transition skin-yellow sidebar-mini">
     <!-- Site wrapper -->
@@ -170,7 +199,8 @@ if (is_auth()) {
         if ($('[data-datepicker]').length) {
           //Date picker
           $('[data-datepicker]').datepicker({
-            autoclose: true
+            autoclose: true,
+            format: 'yyyy-mm-dd'
           })
         }
       })

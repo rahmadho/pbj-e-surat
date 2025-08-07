@@ -1,15 +1,23 @@
 <?php 
-$filter  = "";
 $id_user = auth()->id;
 if (is_level(LEVEL_KABAG) | is_level(LEVEL_KASUBAG)) {
-    $filter = "WHERE exists (
+    $query = "SELECT * FROM tb_agenda as ta WHERE exists (
         SELECT 1 
         FROM tb_surat_masuk as sm 
-        JOIN m_dispos as d on d.id_dispos=sm.disposisi 
-        WHERE ta.id_surat=sm.id AND d.id_leader=$id_user
+        JOIN tb_disposisi as td on td.id_surat_masuk=sm.id
+        JOIN m_dispos as d on d.id_dispos=td.disposisi_ke
+        WHERE ta.id_surat=sm.id 
+        AND d.id_leader=$id_user
+    )";
+    // print_r($query);
+} else {
+    $query = "SELECT * FROM tb_agenda as ta WHERE exists (
+        SELECT 1 
+        FROM tb_surat_masuk as sm 
+        WHERE ta.id_surat=sm.id 
     )";
 }
-$query_agenda = $koneksi->query("SELECT * FROM tb_agenda as ta $filter");
+$query_agenda = $koneksi->query($query);
 ?>
 <div class="row">
     <div class="col-md-12">

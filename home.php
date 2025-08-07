@@ -18,6 +18,7 @@ if (is_admin()) {
     $user = $sql->num_rows;
   }
 } else {
+  $filter = "";
   $user_id  = auth()->id;
   if (!is_level(LEVEL_KABIRO)) {
     $filter = "WHERE exists (select 1 from m_dispos where m_dispos.id_leader={$user_id} and m_dispos.id_dispos=tb_surat_masuk.disposisi)";
@@ -25,6 +26,11 @@ if (is_admin()) {
   $sql_u = $koneksi->query("select * from tb_user where id={$user_id}");
   $data_u = $sql_u->fetch_assoc();
   $tujuan = $data_u['level_pimpinan'];
+
+  // data bagian user
+  $sql_bagian = $koneksi->query("SELECT id_dispos as id from m_dispos where id_leader={$user_id}");
+  $bagian = $sql_bagian->fetch_object();
+
   // surat masuk
   $sql = $koneksi->query("SELECT COUNT(id) as jml from tb_surat_masuk $filter");
   $row = $sql->fetch_object();
@@ -34,7 +40,12 @@ if (is_admin()) {
   while ($data = $sql->fetch_assoc()) {
     $keluar = $sql->num_rows;
   }
-  $sql = $koneksi->query("select * from tb_disposisi where tujuan='$tujuan'");
+  $filter_bagian = "";
+  if (!is_admin() && !is_level(LEVEL_KABIRO)) {
+    $id_user = auth()->id;
+    $filter_bagian = "WHERE disposisi_ke='{$bagian->id}' ";
+  }
+  $sql = $koneksi->query("select * from tb_disposisi $filter_bagian");
   while ($data = $sql->fetch_assoc()) {
     $disposisi = $sql->num_rows;
   }

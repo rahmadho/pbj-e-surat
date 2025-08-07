@@ -1,4 +1,6 @@
 <?php 
+include "date_helper.php";
+
 if (!function_exists('is_auth')){
     function is_auth(){
         return $_SESSION['auth'] ?? false;
@@ -91,4 +93,11 @@ if (!function_exists('log_history')) {
         $query_history->close();
     }
 }
-?>
+
+if (!function_exists('render')) {
+    function render($view, $input = []){
+        if (file_exists($view)) include $view;
+        else echo "View Not Found";
+    }
+}
+

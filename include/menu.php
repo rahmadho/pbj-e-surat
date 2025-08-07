@@ -16,18 +16,28 @@
 <ul class="sidebar-menu" data-widget="tree">
   <li class="header">Menu Utama</li>
   <li><a href="index.php"><i class="fa fa-dashboard"></i> <span>Home</span></a></li>
-  <?php if (is_admin()) { ?>
-    <li><a href="?page=klasifikasi"><i class="fa fa-bars"></i> <span>Data Klasifikasi Surat </span></a></li>
-    <li><a href="?page=pimpinan"><i class="fa fa-bars"></i> <span>Data Pimpinan </span></a></li>
-
-    <li><a href="?page=m_dispos"><i class="fa fa-th"></i> <span>Data Tujuan Disposisi </span></a></li>
-    <li><a href="?page=asal_tujuan"><i class="fa fa-th"></i> <span>Data Asal/Tujuan Surat </span></a></li>
-  <?php } ?>
   <li><a href="?page=masuk"><i class="fa fa-envelope"></i> <span>Surat Masuk </span></a></li>
   <li><a href="?page=keluar"><i class="fa fa-envelope-o"></i> <span>Surat Keluar </span></a></li>
-  <li><a href="?page=disposisi"><i class="fa fa-envelope-square"></i> <span>Disposisi</span></a></li>
+  <?php if (is_level(LEVEL_KABIRO) || is_admin()) { ?>
+    <li><a href="?page=disposisi"><i class="fa fa-envelope-square"></i> <span>Disposisi</span></a></li>
+  <?php } ?>
   <li><a href="?page=agenda"><i class="fa fa-calendar"></i> <span>Agenda</span></a></li>
   <?php if (is_admin()) { ?>
+    <li class="treeview">
+      <a href="#">
+        <i class="fa fa-database"></i> <span>Master Data</span>
+        <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+      </a>
+      <ul class="treeview-menu">
+        <li><a href="?page=klasifikasi"><i class="fa fa-database"></i> <span>Data Klasifikasi Surat </span></a></li>
+        <li><a href="?page=pimpinan"><i class="fa fa-database"></i> <span>Data Pimpinan </span></a></li>
+        <li><a href="?page=m_dispos"><i class="fa fa-database"></i> <span>Data Tujuan Disposisi </span></a></li>
+        <li><a href="?page=asal_tujuan"><i class="fa fa-database"></i> <span>Data Asal/Tujuan Surat </span></a></li>
+      </ul>
+    </li>
+    <li class="header">Pengaturan</li>
     <li><a href="?page=profile&aksi=seting"><i class="fa fa-gear"></i> <span>Setting</span></a></li>
     <li><a href="?page=user"><i class="fa fa-user"></i> <span>Pengguna</span></a></li>
   <?php } ?>

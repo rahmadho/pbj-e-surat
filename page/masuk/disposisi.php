@@ -9,7 +9,7 @@
     }
 </script>
 <?php
-$id = (int) $_GET['id'];
+$id = (int) _get('id');
 $sql = $koneksi->query("select * from tb_surat_masuk where id='$id'");
 $data = $sql->fetch_assoc();
 $tgl_surat = $data['tgl_surat'];
@@ -30,9 +30,31 @@ $tujuan = $data['tujuan'];
         <div class="row">
             <div class="col-md-12">
                 <form method="POST" enctype="multipart/form-data" onsubmit="return validasi(this)">
-                    <div class="form-group">
-                        <label>Nomor Surat</label>
-                        <input class="form-control" name="no" value="<?php echo _post('no', $data['no_surat']) ?>" readonly="" />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Nomor Surat</label>
+                                <input class="form-control" name="no" value="<?php echo _post('no', $data['no_surat']) ?>" readonly="" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Tanggal Surat</label>
+                                <input class="form-control" value="<?php echo tanggal_indo($data['tgl_surat'], true) ?>" readonly="" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Sifat :</label>
+                                <select class="form-control" id="sifat" name="sifat_dispos" disabled>
+                                    <?php 
+                                    foreach (sifat_surat() as $key => $value) {
+                                        echo "<option " . (_post('sifat_dispos', $sifat) == $key ? 'selected' : '') . " value='$key'>$value</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Perihal Surat</label>
@@ -41,10 +63,11 @@ $tujuan = $data['tujuan'];
                     <div class="form-group">
                         <label>Diteruskan :</label>
                         <select class="form-control" name="terus">
+                            <option value="">-- PILIH --</option>
                             <?php
                             $m_dispos = $koneksi->query("select * from m_dispos");
                             while ($disposisi = $m_dispos->fetch_assoc()) {
-                                $selected = _post('terus', $data['disposisi']) == $disposisi['id_dispos'] ? 'selected' : '';
+                                $selected = _post('terus') == $disposisi['id_dispos'] ? 'selected' : '';
                                 echo "<option value='$disposisi[id_dispos]' $selected>$disposisi[nama_bagian]</option>";
                             }
                             ?>
@@ -55,17 +78,8 @@ $tujuan = $data['tujuan'];
                         <textarea class="form-control" rows="3" name="ket" id="catatan"><?php echo _post('ket') ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Sifat :</label>
-                        <select class="form-control" id="sifat" name="sifat_dispos">
-                            <option <?=_post('sifat_dispos') == 'Biasa' ? 'selected' : ''?> value="Biasa">Biasa</option>
-                            <option <?=_post('sifat_dispos') == 'Penting' ? 'selected' : ''?> value="Penting">Penting</option>
-                            <option <?=_post('sifat_dispos') == 'Sangat Penting' ? 'selected' : ''?> value="Sangat Penting">Sangat Penting</option>
-                            <option <?=_post('sifat_dispos') == 'Segera' ? 'selected' : ''?> value="Segera">Segera</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label>Batas Waktu</label>
-                        <input type="date" data-datepicker class="form-control" name="batas" value="<?php echo _post('batas', $data['batas']) ?>" />
+                        <input type="text" readonly data-datepicker class="form-control bg-white" name="batas" value="<?php echo _post('batas') ?>" />
                     </div>
                     <div>
                         <input type="submit" name="simpan" value="Simpan" class="btn btn-success">
@@ -78,29 +92,29 @@ $tujuan = $data['tujuan'];
 </div>
 <?php
 if (is_post()) {
-    $no = _post('no');
-    $terus = _post('terus');
-    $ket = _post('ket');
-    $sifat_dispos = _post('sifat_dispos');
-    $batas = _post('batas');
+    $disposisi_ke = (int) _post('terus');
+    $disposisi_dari = (int) auth()->id;
+    $keterangan = _post('ket');
+    $batas_waktu = _post('batas');
     $simpan = _post('simpan');
     if ($simpan) {
         $koneksi->begin_transaction();
         try {
-            $query_disposisi = $koneksi->prepare("INSERT INTO tb_disposisi (id_surat_masuk, no_surat, tgl_surat, tanggal_terima, asal_surat, sifat_surat, perihal, no_agenda, teruskan, ket, sifat_dispos, batas, indeks, kode_surat, tujuan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $query_disposisi->bind_param("isssssssssssssi", $id, $no, $tgl_surat, $tgl_terima, $asal, $sifat, $perihal, $agenda, $terus, $ket, $sifat_dispos, $batas, $indeks, $kode_surat, $tujuan);
+            $query_disposisi = $koneksi->prepare("INSERT INTO tb_disposisi (id_surat_masuk, disposisi_ke, disposisi_dari, keterangan, batas_waktu) VALUES (?, ?, ?, ?, ?)");
+            $query_disposisi->bind_param("iiiss", $id, $disposisi_ke, $disposisi_dari, $keterangan, $batas_waktu);
             $query_disposisi->execute();
+            $disposisi_id = $koneksi->insert_id;
 
             $query_surat = $koneksi->prepare("UPDATE tb_surat_masuk set status=1, disposisi=? where id = ?");
-            $query_surat->bind_param("ii", $terus, $id);
+            $query_surat->bind_param("ii", $disposisi_id, $id);
             $query_surat->execute();
             
-            $m_dispos = $koneksi->query("select nama_bagian from m_dispos where id_dispos=$terus");
+            $m_dispos = $koneksi->query("SELECT nama_bagian FROM m_dispos WHERE id_dispos=$disposisi_ke");
             $bagian = $m_dispos->fetch_object();
 
             if (!$bagian) throw new Exception("Tujuan disposisi tidak ditemukan");
 
-            log_history($koneksi, $id, "Disposisi surat ke $bagian->nama_bagian dientri oleh " . auth()->nama_user);
+            log_history($koneksi, $id, "Disposisi surat ke $bagian->nama_bagian oleh " . auth()->nama_user);
 
             $koneksi->commit();
             

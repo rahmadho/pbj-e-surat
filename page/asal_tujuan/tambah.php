@@ -23,14 +23,13 @@
 <?php
 if (is_post()) {
     $nama = $_POST['nama'];
-    $simpan = $_POST['simpan'];
-    if ($simpan) {
-        try {
-            $sql = $koneksi->query("insert into tb_asal_tujuan (asal_tujuan) values ('$nama')");
-            swal("success", "Berhasil!", "Data berhasil disimpan!", "?page=asal_tujuan");
-        } catch (\Throwable $th) {
-            swal("error", "Oops!", "Data gagal disimpan!".$th->getMessage(), "?page=asal_tujuan");
-        }
+    try {
+        $sql = $koneksi->prepare("INSERT INTO tb_asal_tujuan (asal_tujuan) VALUES (?)");
+        $sql->bind_param("s", $nama);
+        $sql->execute();
+        swal("success", "Berhasil!", "Data berhasil disimpan!", "?page=asal_tujuan");
+    } catch (\Throwable $th) {
+        swal("error", "Oops!", "Data gagal disimpan!" . $th->getMessage(), "?page=asal_tujuan");
     }
 }
 ?>

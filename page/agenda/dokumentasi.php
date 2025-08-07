@@ -27,10 +27,10 @@ if (empty($agenda)) {
                         <th class="bg-light" width="200">Tempat Agenda</th>
                         <td><?php echo $agenda->tempat_agenda; ?></td>
                     </tr>
-                    <?php if (is_level(LEVEL_KABIRO) || is_admin()) { ?>
+                    <?php // if (is_level(LEVEL_KABIRO) || is_admin()) { ?>
                     <tr>
                         <th class="bg-light" width="200">Keterangan</th>
-                        <td><?php echo $agenda->keterangan; ?></td>
+                        <td><?php echo $agenda->keterangan ?? "<span class='text-danger'>Belum ada laporan</span>"; ?></td>
                     </tr>
                     <tr>
                         <th class="bg-light" width="200">Laporan</th>
@@ -48,11 +48,11 @@ if (empty($agenda)) {
                             <?php if (!empty($agenda->file_foto)) { ?>
                             <a href="file/<?php echo $agenda->file_foto; ?>" target="blank">Lihat</a>
                             <?php } else { ?>
-                            <span class="text-danger">Belum ada foto dokumentasi</span>
+                            <span class="text-danger">Belum ada laporan</span>
                             <?php } ?>
                         </td>
                     </tr>   
-                    <?php } ?>
+                    <?php // } ?>
                 </table>
             </div>
             <?php if (is_level(LEVEL_KABAG) || is_level(LEVEL_KASUBAG)) { ?>

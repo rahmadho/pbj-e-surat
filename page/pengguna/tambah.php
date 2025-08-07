@@ -65,11 +65,11 @@
 </div>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $username = $_POST['username'];
-  $pass = $_POST['pass'];
-  $nama = $_POST['nama'];
-  $level_pimpinan = $_POST['level_pimpinan'];
+if (is_post()) {
+  $username = _post('username');
+  $pass = _post('pass');
+  $nama = _post('nama');
+  $level_pimpinan = _post('level_pimpinan');
   $foto = $_FILES['foto']['name'];
   $lokasi = $_FILES['foto']['tmp_name'];
   $upload = move_uploaded_file($lokasi, "images/" . $foto);
@@ -78,19 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($upload) {
       $sql = $koneksi->query("insert into tb_user (username, password, nama_user, level, foto, level_pimpinan)values('$username', '$pass', '$nama', 'user', '$foto', '$level_pimpinan')");
       if ($sql) {
-        echo "
-            <script>
-                setTimeout(function() {
-                    swal({
-                        title: 'Selamat!',
-                        text: 'Data Berhasil Disimpan!',
-                        type: 'success'
-                    }, function() {
-                        window.location = '?page=user';
-                    });
-                }, 300);
-            </script>
-        ";
+        swal("success", "Selamat!", "Data Berhasil Disimpan!", "?page=user");
       }
     }
   }

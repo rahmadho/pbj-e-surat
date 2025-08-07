@@ -29,13 +29,11 @@ $data = $sql->fetch_assoc();
 if (is_post()) {
     $nama = $_POST['nama'];
     $simpan = $_POST['simpan'];
-    if ($simpan) {
-        try {
-            $sql = $koneksi->query("update tb_asal_tujuan set asal_tujuan ='$nama' where id_asal_tujuan='$id'");
-            swal("success", "Berhasil!", "Data berhasil diubah!", "?page=asal_tujuan");
-        } catch (\Throwable $th) {
-            swal("error", "Oops!", "Data gagal diubah!".$th->getMessage(), "?page=asal_tujuan");
-        }
+    try {
+        $sql = $koneksi->query("update tb_asal_tujuan set asal_tujuan ='$nama' where id_asal_tujuan='$id'");
+        swal("success", "Berhasil!", "Data berhasil diubah!", "?page=asal_tujuan");
+    } catch (\Throwable $th) {
+        swal("error", "Oops!", "Data gagal diubah!".$th->getMessage(), "?page=asal_tujuan");
     }
 }
 ?>

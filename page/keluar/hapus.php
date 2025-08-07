@@ -1,17 +1,10 @@
 <?php
-	$id = $_GET['id'];
-	$sql = $koneksi->query("delete from tb_surat_keluar where no_agenda='$id'");
-	?>
-		<script>
-		    setTimeout(function() {
-		        sweetAlert({
-		            title: 'OKE!',
-		            text: 'Data Berhasil Dihapus!',
-		            type: 'error'
-		        }, function() {
-		            window.location = '?page=keluar';
-		        });
-		    }, 300);
-		</script>
-	<?php
- ?>
+$id = (int) _get('id');
+try {
+    $sql = $koneksi->prepare("DELETE FROM tb_surat_keluar WHERE no_agenda=?");
+    $sql->bind_param("i", $id);
+    $sql->execute();
+    swal("success", "Selamat!", "Data Berhasil Dihapus!", "?page=keluar");
+} catch (\Throwable $th) {
+    swal("error", "Oops!", "Gagal Menghapus Data! ".$th->getMessage(), "?page=keluar");
+}

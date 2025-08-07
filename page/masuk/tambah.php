@@ -92,15 +92,19 @@ if (strlen($tambah) == 1) {
               <div class="form-group">
                 <label>Sifat Surat :</label>
                 <select class="form-control" id="sifat" name="sifat">
-                  <option value="b">Biasa</option>
-                  <option value="p">Penting</option>
-                  <option value="sp">Sangat Penting</option>
-                  <option value="s">Segera</option>
+                  <option value="">-- PILIH --</option>
+                  <?php 
+                  foreach (SIFAT_SURAT as $key => $sifat) {
+                      $selected = (_post('sifat') == $key) ? "selected" : "";
+                      echo "<option value='$key' $selected>$sifat</option>";
+                  }
+                  ?>
                 </select>
               </div>
               <div class="form-group">
                 <label>Asal Surat :</label>
                 <select class="form-control select2" name="asal">
+                  <option value="">-- PILIH --</option>
                   <?php
                   $sql = $koneksi->query("select * from tb_asal_tujuan");
                   while ($data = $sql->fetch_object()) {
@@ -120,11 +124,11 @@ if (strlen($tambah) == 1) {
               <div class="form-group">
                 <label>Tujuan Surat :</label>
                 <select class="form-control select2" name="tujuan">
+                  <option value="">-- PILIH --</option>
                   <?php
                   $sql = $koneksi->query("select * from tb_tujuan");
-                  while ($data = $sql->fetch_object()) {
-                    echo "<option value='$data->id_tujuan'>$data->nama_tujuan</option>";
-                  }
+                  $data = $sql->fetch_object();
+                  echo "<option value='$data->id_tujuan'>$data->nama_tujuan</option>";
                   ?>
                 </select>
               </div>
@@ -148,16 +152,17 @@ if (strlen($tambah) == 1) {
               </div>
               <div class="form-group">
                 <label>Tanggal Surat</label>
-                <input type="date" data-datepicker class="form-control" name="tgl_surat" id="tgl_surat" />
+                <input type="text" readonly data-datepicker class="form-control" name="tgl_surat" id="tgl_surat" />
               </div>
               <div class="form-group">
                 <label>Tanggal Terima</label>
-                <input type="date" data-datepicker class="form-control" name="tgl_terima" id="tgl_terima" />
+                <input type="text" readonly data-datepicker class="form-control" name="tgl_terima" id="tgl_terima" value="<?php echo date('Y-m-d'); ?>" />
               </div>
               <div class="form-group">
                 <label>File Surat (Format pdf)</label>
-                <input type="file" name="foto" id="foto" />
+                <input type="file" name="foto" id="foto" accept=".pdf" />
               </div>
+              <hr>
               <div class="form-group">
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <input type="checkbox" name="is_undangan" class="minimal" value="1" id="is_undangan" style="margin: 0;">
@@ -173,7 +178,7 @@ if (strlen($tambah) == 1) {
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Tanggal Agenda</label>
-                      <input type="date" data-datepicker class="form-control" name="tgl_agenda" id="tgl_agenda" />
+                      <input type="text" readonly data-datepicker class="form-control" name="tgl_agenda" id="tgl_agenda" />
                     </div>
                   </div>
                   <div class="col-md-6">

@@ -31,7 +31,7 @@
                                             <td><?php echo $data['username'];?></td>
                                             <td><?php echo $data['nama_user'];?></td>
                                             <td><?php echo $data['level'];?></td>
-                                            <td> <img style="border-radius:50%;" src="images/<?php echo  $data['foto'];?>" width="75" height="50"> </td>
+                                            <td> <img src="images/<?php echo  $data['foto'];?>" class="img-circle" width="45" height="45"> </td>
                                              <td>
                                                 <a href="?page=user&aksi=ubah&id=<?php echo $data['id']; ?>" class="btn btn-info" ><i class="fa fa-edit"></i> Ubah</a>
                                                 <a onclick="return confirm('Anda Yakin Akan Mengahapus Data Ini ... ???')" href="?page=user&aksi=hapus&id=<?php echo $data['id']; ?>" class="btn btn-danger" ><i class="fa fa-trash"></i> Hapus</a>

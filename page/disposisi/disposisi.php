@@ -1,3 +1,10 @@
+<?php
+/**
+ * Keterangan Fields :
+ * teruskan => tujuan disposisi surat
+ * 
+*/
+?>
 <div class="row">
     <div class="col-md-12">
         <!-- Advanced Tables -->
@@ -13,7 +20,6 @@
                                 <th>No</th>
                                 <th>No Surat</th>
                                 <th>Tanggal Surat</th>
-                                <th>Tanggal Terima</th>
                                 <th>Asal</th>
                                 <th>Sifat</th>
                                 <th>Perihal</th>
@@ -32,17 +38,26 @@
                             if (is_level(LEVEL_KABAG) || is_level(LEVEL_KASUBAG)) {
                                 $filter = "WHERE m_dispos.id_leader=$id_user";
                             }
-                            $sql = $koneksi->query("SELECT tb_disposisi.*, m_dispos.nama_bagian as nama_bagian 
-                                FROM tb_disposisi JOIN m_dispos ON m_dispos.id_dispos=tb_disposisi.teruskan 
+                            $sql = $koneksi->query("SELECT t1.id, t1.id_surat_masuk, t1.keterangan, t1.batas_waktu, 
+                                t2.nama_bagian as nama_bagian, 
+                                t3.no_surat, t3.tgl_surat, t3.tanggal_terima, t3.sifat_surat, t3.perihal,
+                                t4.asal_tujuan as nama_asal_tujuan
+                                FROM tb_disposisi as t1
+                                JOIN m_dispos as t2 ON t2.id_dispos=t1.disposisi_ke 
+                                JOIN tb_surat_masuk as t3 ON t3.id=t1.id_surat_masuk
+                                JOIN tb_asal_tujuan as t4 ON t4.id_asal_tujuan=t3.asal_surat
                                 $filter");
                             while ($data = $sql->fetch_assoc()) {
                                 ?>
                                 <tr>
                                     <td><?php echo $no++; ?></td>
                                     <td><?php echo $data['no_surat']; ?></td>
-                                    <td><?php echo date('d F Y', strtotime($data['tgl_surat'])); ?></td>
-                                    <td><?php echo date('d F Y', strtotime($data['tanggal_terima'])); ?></td>
-                                    <td><?php echo $data['asal_surat']; ?></td>
+                                    <td>
+                                        <div><?php echo tanggal_indo($data['tgl_surat']); ?></div>
+                                        <div class="text-sm text-muted"><span>Diterima</span><span>: </span> <?php echo tanggal_indo($data['tanggal_terima']); ?></div>
+                                    </td>
+                                    <!-- <td></td> -->
+                                    <td><?php echo $data['nama_asal_tujuan']; ?></td>
                                     <td><?php
                                     if ($data['sifat_surat'] == "p") {
                                         echo "Penting";
@@ -56,12 +71,13 @@
                                     ?></td>
                                     <td><?php echo $data['perihal']; ?></td>
                                     <td><?php echo $data['nama_bagian']; ?></td>
-                                    <td><?php echo $data['ket']; ?></td>
+                                    <td><?php echo $data['keterangan']; ?></td>
                                     <?php if (is_level(LEVEL_KABIRO) || is_admin()) { ?>
                                     <td>
+                                        <a href="?page=masuk&aksi=info&id=<?php echo $data['id_surat_masuk']; ?>"
+                                            class="btn btn-outline-info btn-xs"><i class="fa fa-eye mr-2"></i> Lihat Surat</a>
                                         <a href="page/disposisi/cetak.php?id=<?php echo $data['id']; ?>" target="blank"
                                             class="btn btn-info btn-xs"><i class="fa fa-print "></i> Cetak Disposisi</a>
-
                                     </td>
                                     <?php } ?>
                                 </tr>
@@ -69,9 +85,9 @@
                         </tbody>
                     </table>
                 </div>
-                <a id="lap_masuk" data-toggle="modal" data-target="#lap" style="margin-bottom:  px; margin-left: 5px;"
+                <!-- <a id="lap_masuk" data-toggle="modal" data-target="#lap" style="margin-bottom:  px; margin-left: 5px;"
                     class="btn btn-default"><i class="fa fa-print"></i> Cetak PDF</a>
-                <input type=button value=Kembali onclick=self.history.back() class="btn btn-info" />
+                <input type=button value=Kembali onclick=self.history.back() class="btn btn-info" /> -->
                 <div class="modal fade" id="lap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">

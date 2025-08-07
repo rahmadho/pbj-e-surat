@@ -1,6 +1,6 @@
 <?php
-$page = $_GET['page'];
-$aksi = $_GET['aksi'];
+$page = _get('page');
+$aksi = _get('aksi');
 if ($page == "masuk") {
   if ($aksi == "") {
     include "page/masuk/masuk.php";
@@ -19,6 +19,9 @@ if ($page == "masuk") {
   }
   if ($aksi == "hapus") {
     include "page/masuk/hapus.php";
+  }
+  if ($aksi == "info") {
+    include "page/masuk/info.php";
   }
 }
 if ($page == "m_dispos") {

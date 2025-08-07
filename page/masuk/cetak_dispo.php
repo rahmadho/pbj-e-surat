@@ -1,8 +1,11 @@
 <?php
 error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
+session_start();
 include "../../koneksi/koneksi.php";
-$sql2 = $koneksi->query("select * from tb_profile ");
-$profile = $sql2->fetch_assoc();
+include "../../include/tanggal.php";
+include "../../include/constant.php";
+include "../../include/helper.php";
+
 ?>
 <style type="text/css">
   .tabel {
@@ -38,22 +41,30 @@ $profile = $sql2->fetch_assoc();
   }
 </style>
 <script>
-
-  window.print();
-  window.onfocus = function () { window.close(); }
+  // window.print();
+  // window.onfocus = function () { window.close(); }
 </script>
 </head>
 
 <body onload="window.print()">
   <?php
-
-  $id = $_GET['id'];
-  $sql1 = $koneksi->query("select * from tb_disposisi, tb_surat_masuk, m_dispos, ref_klasifikasi, tb_asal_tujuan where tb_disposisi.teruskan=m_dispos.id_dispos and tb_disposisi.kode_surat=ref_klasifikasi.id and tb_surat_masuk.asal_surat=tb_asal_tujuan.id_asal_tujuan and tb_surat_masuk.id='$id'");
-  $tampil = $sql1->fetch_assoc();
+  $id = (int) _get('id');
+  $sql = $koneksi->query("SELECT t1.keterangan, t1.batas_waktu, 
+    t2.nama_bagian as nama_bagian, 
+    t3.no_surat, t3.tgl_surat, t3.tanggal_terima, t3.sifat_surat, t3.perihal,
+    t4.asal_tujuan as nama_asal_tujuan
+    FROM tb_disposisi as t1
+    JOIN m_dispos as t2 ON t2.id_dispos=t1.disposisi_ke 
+    JOIN tb_surat_masuk as t3 ON t3.id=t1.id_surat_masuk
+    JOIN tb_asal_tujuan as t4 ON t4.id_asal_tujuan=t3.asal_surat
+    WHERE t1.id=$id
+  ");
+  $tampil = $sql->fetch_assoc();
+  print_r($tampil);
+  exit();
   ?>
   <?php
-
-  $sql = $koneksi->query("select * from tb_profile");
+  $sql = $koneksi->query("SELECT * from tb_profile");
   $data = $sql->fetch_assoc();
   ?>
 

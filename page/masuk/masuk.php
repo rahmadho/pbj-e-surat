@@ -11,50 +11,44 @@
                         <a href="?page=masuk&aksi=tambah" class="btn btn-success" style="margin-bottom: 10px;"><i
                                 class="fa fa-plus"></i> Tambah </a>
                     <?php } ?>
-                    <a id="lap_masuk" data-toggle="modal" data-target="#lap"
-                        style="margin-bottom: 10px;; margin-left: 5px;" class="btn btn-default"><i
-                            class="fa fa-print"></i> Cetak PDF</a>
-                    <input style="margin-bottom: 10px;; margin-left: 5px;" type=button value=Kembali
-                        onclick=self.history.back() class="btn btn-info" />
+                    <!-- <a id="lap_masuk" data-toggle="modal" data-target="#lap" style="margin-bottom: 10px;; margin-left: 5px;" class="btn btn-default"><i class="fa fa-print"></i> Cetak PDF</a> -->
+                    <!-- <input style="margin-bottom: 10px;; margin-left: 5px;" type=button value=Kembali onclick=self.history.back() class="btn btn-info" /> -->
                     <table class="table table-striped table-bordered table-hover" data-datatable="true">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>No. Reg/Kode</th>
+                                <th>No.Reg/Kode</th>
                                 <th>Asal Surat</th>
                                 <th>Perihal, File</th>
                                 <th>Nomor, Tanggal Surat</th>
-                                <th>Status Disposisi</th>
+                                <th>Disposisi</th>
+                                <th>Sifat</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $no = 1;
-                            if (is_admin()) {
-                                $sql = $koneksi->query("select tb_surat_masuk.*, tb_tujuan.nama_tujuan, tb_asal_tujuan.asal_tujuan from tb_surat_masuk, tb_tujuan, ref_klasifikasi, tb_asal_tujuan 
-                                            where tb_surat_masuk.tujuan=tb_tujuan.id_tujuan 
-                                            and tb_surat_masuk.kode_surat=ref_klasifikasi.id
-                                            and tb_surat_masuk.asal_surat=tb_asal_tujuan.id_asal_tujuan
-                                            order by tb_surat_masuk.id desc ");
-                            } else {
-                                $filter = "";
-                                if (!is_level(LEVEL_KABIRO)) {
-                                    $id_user = auth()->id;
-                                    $filter = "and exists (select 1 from m_dispos where m_dispos.id_leader=$id_user and m_dispos.id_dispos=tb_surat_masuk.disposisi)";
-                                }
-                                $sql = $koneksi->query("select tb_surat_masuk.*, tb_tujuan.nama_tujuan, tb_asal_tujuan.asal_tujuan from tb_surat_masuk, tb_tujuan, ref_klasifikasi, tb_asal_tujuan 
-                                            where tb_surat_masuk.tujuan=tb_tujuan.id_tujuan 
-                                            and tb_surat_masuk.kode_surat=ref_klasifikasi.id
-                                            and tb_surat_masuk.asal_surat=tb_asal_tujuan.id_asal_tujuan 
-                                            $filter
-                                            order by tb_surat_masuk.id desc ");
+                            $filter = "";
+
+                            $base_sql = "SELECT t1.id, t1.no_agenda, t1.no_surat, t1.tgl_surat, t1.tanggal_terima, t1.sifat_surat, t1.perihal, t1.indeks, t1.status, t1.disposisi, t1.file_surat,
+                                t2.no_hp, t2.nama_tujuan, t3.kode, t4.asal_tujuan
+                                FROM tb_surat_masuk as t1 
+                                LEFT JOIN tb_tujuan as t2 ON t1.tujuan=t2.id_tujuan
+                                LEFT JOIN ref_klasifikasi as t3 ON t1.kode_surat=t3.id
+                                LEFT JOIN tb_asal_tujuan as t4 ON t1.asal_surat=t4.id_asal_tujuan 
+                                LEFT JOIN tb_disposisi as t5 ON t5.id=t1.disposisi";
+
+                            if (!is_admin() && !is_level(LEVEL_KABIRO)) {
+                                $id_user = auth()->id;
+                                $filter = "WHERE exists (SELECT 1 FROM tb_disposisi JOIN m_dispos ON tb_disposisi.disposisi_ke=m_dispos.id_dispos WHERE m_dispos.id_leader=$id_user AND tb_disposisi.id_surat_masuk=t1.id)";
                             }
+                            $sql = $koneksi->query("$base_sql $filter ORDER BY t1.id DESC");
                             while ($data = $sql->fetch_assoc()) {
                                 ?>
                                 <tr>
                                     <td><?php echo $no++; ?></td>
-                                    <td><?php echo $data['no_agenda']; ?>/<?php echo $data['kode']; ?></td>
+                                    <td><?php echo $data['no_agenda']; ?> / <?php echo $data['kode']; ?></td>
                                     <td><?php echo $data['asal_tujuan']; ?> <br>
                                         <div style="color: red;"> [index: <?php echo $data['indeks']; ?>]<div>
                                     </td>
@@ -75,30 +69,31 @@
                                         }
                                         ?>
                                     </td>
+                                    <td><?php echo sifat_surat($data['sifat_surat']); ?></td>
                                     <td>
+                                        <a href="?page=masuk&aksi=info&id=<?php echo $data['id']; ?>"
+                                            class="d-block btn btn-outline-info btn-xs"><i class="fa fa-eye "></i> Lihat</a>
                                         <?php if (is_admin()) { ?>
-                                            <a href="https://api.whatsapp.com/send?phone=<?php echo $data['no_hp'] ?>&text=Ada Surat Masuk Tanggal: <?php echo date('d-m-Y', strtotime($data['tanggal_terima'])) ?>, Dengan No Surat: <?php echo $data['no_surat'] ?>,  Tanggal Surat: <?php echo date('d-m-Y', strtotime($data['tgl_surat'])) ?>,  Asal Surat Dari:   <?php echo $data['asal_surat'] ?>, Dengan Tujuan Surat:   <?php echo $data['nama_tujuan'] ?>, Perihal:   <?php echo $data['perihal'] ?>  "
-                                                target="blank" class="btn btn-success btn-xs"> <i class="fa  fa-whatsapp"></i>
+                                            <a href="https://api.whatsapp.com/send?phone=<?php echo $data['no_hp'] ?>&text=Ada Surat Masuk Tanggal: <?php echo tanggal_indo($data['tanggal_terima'], true) ?>, Dengan No Surat: <?php echo $data['no_surat'] ?>,  Tanggal Surat: <?php echo tanggal_indo($data['tgl_surat'], true) ?>,  Asal Surat Dari: <?php echo $data['asal_tujuan'] ?>, Dengan Tujuan Surat: <?php echo $data['nama_tujuan'] ?>, Perihal: <?php echo $data['perihal'] ?>"
+                                                target="blank" class="d-block btn btn-success btn-xs"> <i class="fa  fa-whatsapp"></i>
                                                 Kirim WA</a>
                                             <a href="?page=masuk&aksi=ubah&id=<?php echo $data['id']; ?>"
-                                                class="btn btn-info btn-xs"><i class="fa fa-edit "></i> Ubah</a>
+                                                class="d-block btn btn-info btn-xs"><i class="fa fa-edit "></i> Ubah</a>
                                         <?php } ?>
                                         <?php if ($data['status'] == 0) {
                                             ?>
                                             <a href="?page=masuk&aksi=disposisi&id=<?php echo $data['id']; ?>"
-                                                class="btn btn-success btn-xs"><i class="fa fa-mail-forward "></i> Disposisi</a>
-                                            <a disabled href="" class="btn btn-warning btn-xs"><i class="fa fa-print "></i>
-                                                Cetak Disposisi</a>
+                                                class="d-block btn btn-success btn-xs"><i class="fa fa-mail-forward "></i> Disposisi</a>
                                         <?php } else { ?>
-                                            <a disabled="" class="btn btn-success btn-xs"><i class="fa fa-mail-forward "></i>
+                                            <a disabled="" class="d-block btn btn-success btn-xs"><i class="fa fa-mail-forward "></i>
                                                 Disposisi</a>
-                                            <a target="blank" href="page/masuk/cetak_dispo.php?id=<?php echo $data['id']; ?>"
-                                                class="btn btn-warning btn-xs"><i class="fa fa-print "></i> Cetak Disposisi</a>
+                                            <a target="blank" href="page/disposisi/cetak.php?id=<?php echo $data['disposisi']; ?>"
+                                                class="d-block btn btn-warning btn-xs"><i class="fa fa-print "></i> Cetak Disposisi</a>
                                         <?php } ?>
                                         <?php if (is_admin()) { ?>
                                             <a onclick="return confirm('Anda Yakin Akan Mengahapus Data Ini ... ???')"
                                                 href="?page=masuk&aksi=hapus&id=<?php echo $data['id']; ?>"
-                                                class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</a>
+                                                class="d-block btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</a>
                                         <?php } ?>
                                     </td>
                                 </tr>

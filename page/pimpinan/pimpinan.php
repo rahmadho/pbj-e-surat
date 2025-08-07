@@ -30,10 +30,10 @@
                                     <td><?php echo $data['no_hp']; ?></td>
                                     <td>
                                         <a href="?page=pimpinan&aksi=ubah&id=<?php echo $data['id_tujuan']; ?>"
-                                            class="btn btn-info"><i class="fa fa-edit"></i> Ubah</a>
+                                            class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Ubah</a>
                                         <a onclick="return confirm('Anda Yakin Akan Mengahapus Data Ini ... ???')"
                                             href="?page=pimpinan&aksi=hapus&id=<?php echo $data['id_tujuan']; ?>"
-                                            class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
+                                            class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus</a>
                                     </td>
                                 </tr>
                             <?php } ?>

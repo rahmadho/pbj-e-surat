@@ -9,10 +9,10 @@
         <div class="table-responsive">
           <a href="?page=keluar&aksi=tambah" style="margin-bottom: 8px; margin-left: 5px;" class="btn btn-success"> <i
               class="fa fa-plus"></i> Tambah</a>
-          <a id="lap_masuk" data-toggle="modal" data-target="#lap" style="margin-bottom: 8px; margin-left: 5px;"
+          <!-- <a id="lap_masuk" data-toggle="modal" data-target="#lap" style="margin-bottom: 8px; margin-left: 5px;"
             class="btn btn-default"><i class="fa fa-print"></i> Cetak PDF</a>
           <input type=button value=Kembali onclick=self.history.back() style="margin-bottom: 8px; margin-left: 5px;"
-            class="btn btn-info" />
+            class="btn btn-info" /> -->
           <table class="table table-striped table-bordered table-hover" data-datatable="true">
             <thead>
               <tr>
@@ -29,19 +29,19 @@
             </thead>
             <tbody>
               <?php
-              if (is_admin()) {
-                $no = 1;
-                $sql = $koneksi->query("select * from tb_surat_keluar
-                  left join ref_klasifikasi on tb_surat_keluar.kode_surat=ref_klasifikasi.id
-                  left join tb_asal_tujuan on
-                  tb_surat_keluar.kepada=tb_asal_tujuan.id_asal_tujuan ");
+              $no = 1;
+
+              $base_sql = "SELECT t1.*, t2.kode, t2.nama, t3.asal_tujuan 
+                  from tb_surat_keluar as t1
+                  left join ref_klasifikasi as t2 on t1.kode_surat=t2.id
+                  left join tb_asal_tujuan as t3 on t1.kepada=t3.id_asal_tujuan";
+              if (is_admin() || is_level(LEVEL_KABIRO)) {
+                $sql = $koneksi->query($base_sql);
               } else {
-                $no = 1;
-                $sql = $koneksi->query("select * from tb_surat_keluar
-                  left join ref_klasifikasi on tb_surat_keluar.kode_surat=ref_klasifikasi.id
-                  left join tb_asal_tujuan on
-                  tb_surat_keluar.kepada=tb_asal_tujuan.id_asal_tujuan
-                  where tb_surat_keluar.tujuan='$tujuan'");
+                $tujuan = auth()->id;
+                $dispos_user = $koneksi->query("SELECT id_dispos FROM m_dispos WHERE id_leader = $tujuan");
+                $dispos_id = $dispos_user->fetch_object()?->id_dispos;
+                $sql = $koneksi->query("$base_sql WHERE t1.created_by='$tujuan' OR dispos_id = $dispos_id");
               }
               while ($data = $sql->fetch_assoc()) {
                 ?>
