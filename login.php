@@ -1,8 +1,6 @@
 <?php
 ob_start();
-session_start();
-include "koneksi/koneksi.php";
-include "include/helper.php";
+include "includes.php";
 if (is_auth()) {
   header("location:index.php");
 } else {
