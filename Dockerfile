@@ -1,6 +1,8 @@
 # Gunakan image resmi PHP dengan Apache
 FROM php:8.2-apache
 
+RUN docker-php-ext-install mysqli
+
 # Copy semua file proyek ke dalam folder /var/www/html di dalam container
 COPY . /var/www/html/
 
