@@ -6,6 +6,4 @@ services:
     container_name: php-e-surat
     ports:
       - "8007:80"  # Akses dari http://localhost:8080
-    volumes:
-      - ./:/var/www/html
     restart: unless-stopped
