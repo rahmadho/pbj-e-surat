@@ -1,9 +1,6 @@
 <?php
-error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
-session_start();
-include "../../koneksi/koneksi.php";
-include "../../include/constant.php";
-include "../../include/helper.php";
+// error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
+include "../../includes.php";
 
 $id = (int) _get('id');
 $sql = $koneksi->query("SELECT t1.keterangan, t1.batas_waktu, 

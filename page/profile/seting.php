@@ -27,7 +27,7 @@ $data = profile();
           </div>
           <div class="form-group">
             <label>Foto</label>
-            <label><img src='images/<?php echo $data->foto; ?>' width="100" height="75"></label>
+            <label><img src='images/<?php echo $data->foto; ?>' height="75"></label>
           </div>
           <div class="form-group">
             <label>Ganti Foto</label>

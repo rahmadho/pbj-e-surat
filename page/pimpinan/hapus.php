@@ -1,17 +1,8 @@
 <?php
-	$id = $_GET['id'];
+$id = (int) _get('id');
+try {
 	$sql = $koneksi->query("delete from tb_tujuan where id_tujuan='$id'");
-	?>
-		<script>
-		    setTimeout(function() {
-		        sweetAlert({
-		            title: 'OKE!',
-		            text: 'Data Berhasil Dihapus!',
-		            type: 'error'
-		        }, function() {
-		            window.location = '?page=pimpinan';
-		        });
-		    }, 300);
-		</script>
-	<?php
- ?>
+	swal('success', 'Selamat!', 'Data berhasil dihapus!', '?page=pimpinan');
+} catch (\Throwable $th) {
+	swal('error', 'Oops!', 'Data gagal dihapus!', '?page=pimpinan');
+}
