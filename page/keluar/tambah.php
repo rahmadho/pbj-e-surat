@@ -136,6 +136,15 @@ if (strlen($tambah) == 1) {
 </div>
 <?php
 if (is_post() && _post('simpan')) {
+    $created_by = auth()->id;
+
+    if (is_admin()) {
+        $dispos_id = (int) _post('dispos');
+    } else {
+        $dispos_id = $koneksi->query("SELECT id_dispos FROM m_dispos WHERE id_leader = $created_by")
+            ->fetch_object()
+            ->id_dispos;
+    }
     $tahun = date('Y');
     $no = _post('no');
     $tgl = _post('tgl');
@@ -144,12 +153,10 @@ if (is_post() && _post('simpan')) {
     $perihal = _post('perihal');
     $agenda = _post('agenda');
     $kode_surat = (int) _post('kode_surat');
-    $dispos_id = (int) _post('dispos');
     $foto = $_FILES['foto']['name'];
     $lokasi = $_FILES['foto']['tmp_name'];
     $upload = move_uploaded_file($lokasi, "file/" . $foto);
     if ($upload) {
-        $created_by = auth()->id;
         try {
             $simpan = $koneksi->prepare("INSERT INTO tb_surat_keluar (no_surat, tgl_surat, kepada, sifat_surat, perihal, no_agenda, kode_surat, foto, tahun, created_by, dispos_id)
                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

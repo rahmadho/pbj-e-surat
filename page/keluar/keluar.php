@@ -60,10 +60,10 @@
                     <div>
                   </td>
                   <td>
-                    <a href="?page=keluar&aksi=ubah&id=<?php echo $data['id']; ?>" class="btn btn-info"> <i
+                    <a href="?page=keluar&aksi=ubah&id=<?php echo $data['id']; ?>" class="btn btn-sm btn-info"> <i
                         class="fa fa-edit"></i> Ubah</a>
                     <a onclick="return confirm('Apakah Anda Yakin Akan Menghapus Data ini...???')"
-                      href="?page=keluar&aksi=hapus&id=<?php echo $data['id']; ?>"" class=" btn btn-danger"> <i
+                      href="?page=keluar&aksi=hapus&id=<?php echo $data['id']; ?>"" class=" btn btn-sm btn-danger"> <i
                         class="fa fa-trash"></i> Hapus</a>
                   </td>
                 </tr>

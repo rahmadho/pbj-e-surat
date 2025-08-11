@@ -1,19 +1,19 @@
 <?php
 $id = (int) _get('id');
 try {
-    $sql = $koneksi->query("SELECT * FROM tb_surat_keluar WHERE id=$id");
-    $data = $sql->fetch_object();
-    $kode_surat = $data->kode_surat;
-    $asal_tujuan = $data->kepada;
-    $dispos_id = $data->dispos_id;
+  $sql = $koneksi->query("SELECT * FROM tb_surat_keluar WHERE id=$id");
+  $data = $sql->fetch_object();
+  $kode_surat = $data->kode_surat;
+  $asal_tujuan = $data->kepada;
+  $dispos_id = $data->dispos_id;
 } catch (\Throwable $th) {
-    swal("error", "Oops!", "Gagal Mengambil Data! ".$th->getMessage(), "?page=keluar");
+  swal("error", "Oops!", "Gagal Mengambil Data! " . $th->getMessage(), "?page=keluar");
 }
 
 if (empty($data)) {
   swal("error", "Oops!", "Data surat keluar tidak ditemukan", "?page=keluar");
   exit;
-};
+}
 
 ?>
 <div class="row">
@@ -31,17 +31,17 @@ if (empty($data)) {
                 <div class="form-group">
                   <label>NO Agenda</label>
                   <input class="form-control" name="agenda" id="agenda" readonly=""
-                    value="<?php echo $data->no_agenda ?>" />
+                    value="<?php echo $data->no_agenda ?? "" ?>" />
                 </div>
                 <div class="form-group">
                   <label>Sifat Surat :</label>
                   <select class="form-control" name="sifat">
                     <option value="">-- PILIH --</option>
-                    <?php 
-                        foreach (SIFAT_SURAT as $key => $sifat) {
-                            $select = ($data->sifat_surat == $sifat ? "selected" : "");
-                            echo "<option value='$sifat' $select>$sifat</option>";
-                        }
+                    <?php
+                    foreach (SIFAT_SURAT as $key => $sifat) {
+                      $select = ($data->sifat_surat ?? "" == $sifat ? "selected" : "");
+                      echo "<option value='$sifat' $select>$sifat</option>";
+                    }
                     ?>
                   </select>
                 </div>
@@ -50,33 +50,33 @@ if (empty($data)) {
                   <select class="form-control select2" name="kepada">
                     <?php
                     $sql = $koneksi->query("select * from tb_asal_tujuan");
-                    while ($tampil_t = $sql->fetch_assoc()) {
-                      $pilih_t = ($tampil_t['id_asal_tujuan'] == $asal_tujuan ? "selected" : "");
-                      echo "<option value='$tampil_t[id_asal_tujuan]'  $pilih_t>$tampil_t[asal_tujuan]</option>";
+                    while ($at = $sql->fetch_object()) {
+                      $pilih_t = ($at->id_asal_tujuan == $asal_tujuan ? "selected" : "");
+                      echo "<option value='$at->id_asal_tujuan'  $pilih_t>$at->asal_tujuan</option>";
                     }
                     ?>
                   </select>
                 </div>
                 <div class="form-group">
                   <label>No Surat :</label>
-                  <input type="text" class="form-control" name="no" value="<?php echo $data->no_surat ?>" />
+                  <input type="text" class="form-control" name="no" value="<?php echo $data->no_surat ?? "" ?>" />
                 </div>
                 <div class="form-group">
                   <label>Isi Ringkas :</label>
-                  <textarea class="form-control" rows="3" name="perihal"><?php echo $data->perihal ?></textarea>
+                  <textarea class="form-control" rows="3" name="perihal"><?php echo $data->perihal ?? "" ?></textarea>
                 </div>
                 <?php if (is_admin()): ?>
                   <div class="form-group">
-                      <label>Dari Bagian :</label>
-                      <select class="form-control select2" name="dispos" disabled>
-                          <?php
-                          $sql_dispos = $koneksi->query("SELECT * FROM m_dispos");
-                          while ($data_dispos = $sql_dispos->fetch_object()) {
-                              $select = ($data_dispos->id_dispos == $dispos_id ? "selected" : "");
-                              echo "<option value='$data_dispos->id_dispos' $select>$data_dispos->nama_bagian</option>";
-                          }
-                          ?>
-                      </select>
+                    <label>Dari Bagian :</label>
+                    <select class="form-control select2" name="dispos" disabled>
+                      <?php
+                      $sql_dispos = $koneksi->query("SELECT * FROM m_dispos");
+                      while ($md = $sql_dispos->fetch_object()) {
+                        $select = ($md->id_dispos == $dispos_id ? "selected" : "");
+                        echo "<option value='$md->id_dispos' $select>$md->nama_bagian</option>";
+                      }
+                      ?>
+                    </select>
                   </div>
                 <?php endif; ?>
               </div>
@@ -87,16 +87,17 @@ if (empty($data)) {
                   <select class="form-control select2" name="kode_surat">
                     <?php
                     $sql = $koneksi->query("select * from ref_klasifikasi");
-                    while ($tampil_t = $sql->fetch_assoc()) {
-                      $pilih_t = ($tampil_t['id'] == $kode_surat ? "selected" : "");
-                      echo "<option value='$tampil_t[id]' $pilih_t>$tampil_t[kode] - $tampil_t[nama]</option>";
+                    while ($rk = $sql->fetch_object()) {
+                      $pilih_t = ($rk->id == $kode_surat ? "selected" : "");
+                      echo "<option value='$rk->id' $pilih_t>$rk->kode - $rk->nama</option>";
                     }
                     ?>
                   </select>
                 </div>
                 <div class="form-group">
                   <label>Tanggal Surat </label>
-                  <input type="date" data-datepicker class="form-control" name="tgl" value="<?php echo $data->tgl_surat ?>" />
+                  <input type="date" data-datepicker class="form-control" name="tgl"
+                    value="<?php echo $data->tgl_surat ?? "" ?>" />
                 </div>
                 <div class="form-group">
                   <label>File Surat (Format pdf)</label>
@@ -115,6 +116,15 @@ if (empty($data)) {
 
 <?php
 if (is_post()) {
+  $created_by = auth()->id;
+
+  if (is_admin()) {
+    $dispos_id = (int) _post('dispos');
+  } else {
+    $dispos_id = $koneksi->query("SELECT id_dispos FROM m_dispos WHERE id_leader = $created_by")
+      ->fetch_object()
+      ->id_dispos;
+  }
   $no = _post('no');
   $tgl = _post('tgl');
   $sifat = _post('sifat');
@@ -122,7 +132,6 @@ if (is_post()) {
   $perihal = _post('perihal');
   $agenda = _post('agenda');
   $kode_surat = _post('kode_surat');
-  $dispos_id = (int) _post('dispos');
   $foto = $_FILES['foto']['name'];
   $lokasi = $_FILES['foto']['tmp_name'];
   try {
@@ -139,7 +148,7 @@ if (is_post()) {
       }
     }
   } catch (\Throwable $th) {
-    swal("error", "Oops!", "Gagal Simpan Data! ".$th->getMessage());
+    swal("error", "Oops!", "Gagal Simpan Data! " . $th->getMessage());
   }
 }
 ?>
