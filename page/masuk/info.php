@@ -20,10 +20,10 @@ if (is_post()) {
     $koneksi->begin_transaction();
     try {
         $query = $koneksi->prepare("UPDATE tb_disposisi SET tanggapan = ? WHERE id_surat_masuk = ? AND disposisi_ke = ?");
-        $query->bind_param("isi", $tanggapan, $id, $surat->disposisi);
+        $query->bind_param("sii", $tanggapan, $id, $surat->disposisi);
         $query->execute();
 
-        log_history($koneksi, $id, "Tanggapan surat masuk oleh " . auth()->nama_user);
+        log_history($koneksi, $id, "Tanggapan surat masuk oleh " . auth()->nama_user. "<span class='isi-tanggapan'>$tanggapan</span>");
 
         $koneksi->commit();
         swal("success", "Berhasil!", "Tanggapan berhasil disimpan", "?page=masuk&aksi=info&id=$id");
@@ -47,6 +47,17 @@ $sql_disposisi = $koneksi->query("SELECT t1.keterangan, t1.batas_waktu, t1.creat
     WHERE t1.id_surat_masuk='$id'
     ORDER BY created_at ASC");
 ?>
+<style>
+    .isi-tanggapan {
+        display: block;
+        font-weight: 100;
+        color: #000;
+        background-color: #f5f5f5;
+        padding: 10px 20px;
+        border-left: 5px solid #ccc;
+        margin: 10px 0;
+    }
+</style>
 <div class="box box-success box-solid">
     <div class="box-header with-border">
         <div style="display: flex; justify-content: space-between;">
@@ -179,8 +190,8 @@ $sql_disposisi = $koneksi->query("SELECT t1.keterangan, t1.batas_waktu, t1.creat
                     <div class="modal-footer">
                         <button type="submit" name="cetak" class="btn btn-default" style="margin-top: 8px;"><i class="fa fa-send"></i> Kirim</button>
                     </div>
+                </form>
             </div>
-            </form>
         </div>
     </div>
 </div>
