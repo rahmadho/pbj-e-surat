@@ -4,63 +4,28 @@ include "includes.php";
 if (is_auth()) {
   header("location:index.php");
 } else {
-  if (isset($_POST['login'])) {
-    $nama = $_POST['nama'];
-    $pass = $_POST['pass'];
-    $ambil = $koneksi->prepare("SELECT * FROM tb_user WHERE username = ? AND password = ?");
-    $ambil->bind_param("ss", $nama, $pass);
-    $ambil->execute();
-    $data = $ambil->get_result();
-    $data = $data->fetch_object();   
-    if ($data) {
-      $ambil->close();
-
-      $_SESSION['auth'] = $data;
-
-      $profile = $koneksi->query("SELECT * FROM tb_profile");
-      $profile_data = $profile->fetch_object();
-      $_SESSION['profile'] = $profile_data;
-
-      header("location:index.php");
-      exit;
-    } else {
-      ?>
-      <script type="text/javascript">
-        alert("Login Gagal Username dan Password Salah.. Silahkan Ulangi Lagi");
-      </script>
-      <?php
-    }
-  }
   ?>
   <!DOCTYPE html>
-  <html>
+  <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Halaman Login</title>
-    <!-- Tell the browser to be responsive to screen width -->
+    <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
+    <title>Halaman Login</title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <!-- Ionicons -->
     <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-    <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-    <!-- Google Font -->
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" type="text/css" href="plugins/sw/dist/sweetalert.css">
   </head>
   <?php
   $sql = $koneksi->query("select * from tb_profile");
   $data = $sql->fetch_object();
   ?>
-  <body class="hold-transition login-page">
-    <div class="login-box">
-      <div class="login-logo">
-      </div>
-      <!-- /.login-logo -->
+
+  <body class="hold-transition login-page" style="padding-top: 7%">
+    <div class="login-box" style="margin: 0 auto;">
       <div class="login-box-body" style="text-align: center;">
         <img style="text-align: center;" src="images/<?php echo $data->foto ?>" width="160" height="160">
         </br></br>
@@ -76,22 +41,42 @@ if (is_auth()) {
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
-            <!-- /.col -->
             <div class="col-xs-12">
               <button type="submit" name="login" class="btn btn-info btn-block btn-flat">Login</button>
             </div>
-            <!-- /.col -->
           </div>
         </form>
-        <!-- /.login-box-body -->
       </div>
-      <!-- /.login-box -->
-      <!-- jQuery 3 -->
-      <script src="bower_components/jquery/dist/jquery.min.js"></script>
-      <!-- Bootstrap 3.3.7 -->
-      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="plugins/sw/dist/sweetalert.min.js"></script>
   </body>
   </html>
   <?php
+  if (is_post()) {
+    $nama = _post('nama');
+    $pass = _post('pass');
+    $ambil = $koneksi->prepare("SELECT * FROM tb_user WHERE username = ? AND password = ?");
+    $ambil->bind_param("ss", $nama, $pass);
+    $ambil->execute();
+    $data = $ambil->get_result();
+    $data = $data->fetch_object();
+    if ($data) {
+      $ambil->close();
+
+      $_SESSION['auth'] = $data;
+
+      $profile = $koneksi->query("SELECT * FROM tb_profile");
+      $profile_data = $profile->fetch_object();
+      $_SESSION['profile'] = $profile_data;
+
+      header("location:index.php");
+      exit;
+    } else {
+      swal("error", "Login Gagal", "Username dan Password Salah.. Silahkan Ulangi Lagi");
+    }
+  }
 }
+$koneksi->close();
 ?>
