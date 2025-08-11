@@ -1,9 +1,8 @@
 <?php
-include "../../koneksi/koneksi.php";
+include "../../includes.php";
 $id = $_GET['id'];
 $sql = $koneksi->query("select * from  tb_surat_keluar WHERE id='$id'");
-$data = $sql->fetch_assoc();
-$fl = $data['foto'];
+$data = $sql->fetch_object();
 ?>
-<iframe style="float:right;" src="../../file/<?php echo $fl; ?>" width='1350' height='1200' allowfullscreen
+<iframe style="float:right;" src="../../file/<?php echo $data->foto; ?>" width='100%' height='100%' allowfullscreen
     webkitallowfullscreen></iframe>
